@@ -87,41 +87,37 @@ export default class Quotation extends CustomAxios {
     count = 200,
     to = null, // to 포맷 정형화 필요
   }: IOhlcvProps): Promise<IOhlcv[]> {
-    try {
-      const MAX_CALL_COUNT = 200
-      if (count > MAX_CALL_COUNT) {
-        throw new Error('count must be less than 200')
-      }
-
-      const url = this.getUrlOhlcv(interval)
-      if (!url) {
-        throw new Error('invalid interval')
-      }
-
-      const _to = moment(to).utc().format('YYYY-MM-DD HH:mm:ss')
-
-      const { data } = await super.getData<ICandle[]>({
-        method: 'GET',
-        url: `${url}?market=${ticker}&count=${count}${to ? `&to=${_to}` : ''}`,
-      })
-
-      const out = []
-      for (const item of data) {
-        out.push({
-          date: item.candle_date_time_kst,
-          open: item.opening_price,
-          high: item.high_price,
-          low: item.low_price,
-          close: item.trade_price,
-          volume: item.candle_acc_trade_volume,
-          value: item.candle_acc_trade_price,
-        })
-      }
-
-      return out.reverse()
-    } catch (err) {
-      console.error(err)
+    const MAX_CALL_COUNT = 200
+    if (count > MAX_CALL_COUNT) {
+      throw new Error('count must be less than 200')
     }
+
+    const url = this.getUrlOhlcv(interval)
+    if (!url) {
+      throw new Error('invalid interval')
+    }
+
+    const _to = moment(to).utc().format('YYYY-MM-DD HH:mm:ss')
+
+    const { data } = await super.getData<ICandle[]>({
+      method: 'GET',
+      url: `${url}?market=${ticker}&count=${count}${to ? `&to=${_to}` : ''}`,
+    })
+
+    const out = []
+    for (const item of data) {
+      out.push({
+        date: item.candle_date_time_kst,
+        open: item.opening_price,
+        high: item.high_price,
+        low: item.low_price,
+        close: item.trade_price,
+        volume: item.candle_acc_trade_volume,
+        value: item.candle_acc_trade_price,
+      })
+    }
+
+    return out.reverse()
   }
 
   /**
@@ -132,17 +128,13 @@ export default class Quotation extends CustomAxios {
   async getCurrentPrice({
     ticker = 'KRW-BTC',
   }: ICurrentPriceProps): Promise<number> {
-    try {
-      const url = 'https://api.upbit.com/v1/ticker'
-      const { data } = await super.getData<ISnapShot[]>({
-        method: 'GET',
-        url: `${url}?markets=${ticker}`,
-      })
+    const url = 'https://api.upbit.com/v1/ticker'
+    const { data } = await super.getData<ISnapShot[]>({
+      method: 'GET',
+      url: `${url}?markets=${ticker}`,
+    })
 
-      return data[0].trade_price
-    } catch (err) {
-      console.error(err)
-    }
+    return data[0].trade_price
   }
 
   /**
@@ -153,17 +145,13 @@ export default class Quotation extends CustomAxios {
   async getOrderbook({
     ticker = 'KRW-BTC',
   }: IOrderbookProps): Promise<IOrderbook> {
-    try {
-      const url = 'https://api.upbit.com/v1/orderbook'
+    const url = 'https://api.upbit.com/v1/orderbook'
 
-      const { data } = await super.getData<IOrderbook[]>({
-        method: 'GET',
-        url: `${url}?markets=${ticker}`,
-      })
+    const { data } = await super.getData<IOrderbook[]>({
+      method: 'GET',
+      url: `${url}?markets=${ticker}`,
+    })
 
-      return data[0]
-    } catch (err) {
-      console.error(err)
-    }
+    return data[0]
   }
 }

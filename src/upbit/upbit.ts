@@ -2,13 +2,13 @@ import crypto from 'crypto'
 import jwt from 'jsonwebtoken'
 import querystring from 'querystring'
 import { v4 as uuidv4 } from 'uuid'
+import Api from './api'
 import {
   IAccount,
   IOrder,
   IOrderResult,
 } from './interfaces/upbit-api.interface'
 import { ILimitOrder, IMarketOrder } from './interfaces/upbit.inerface'
-import Api from './api'
 
 export default class Upbit extends Api {
   private readonly access: string

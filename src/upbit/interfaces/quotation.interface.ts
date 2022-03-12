@@ -30,7 +30,7 @@ export interface IOhlcvProps {
 }
 
 export interface IOhlcv {
-  data: string
+  date: string
   open: number
   high: number
   low: number

@@ -2,13 +2,14 @@ export interface IBalancesProps {
   ticker?: string
 }
 
-export interface IBuyLimitOrder {
+export interface ILimitOrder {
   ticker: string
   price: number
   volume: number
 }
 
-export interface IBuyMarketOrder {
+export interface IMarketOrder {
   ticker: string
-  price: number
+  price?: number
+  volume?: number
 }

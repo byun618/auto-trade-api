@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken'
 import querystring from 'querystring'
 import { v4 as uuidv4 } from 'uuid'
 import { IAccount, IOrderResult } from './interfaces/upbit-api.interface'
-import { IBuyLimitOrder, IBuyMarketOrder } from './interfaces/upbit.inerface'
+import { ILimitOrder, IMarketOrder } from './interfaces/upbit.inerface'
 import Api from './public/api'
 
 export default class Upbit extends Api {
@@ -61,7 +61,9 @@ export default class Upbit extends Api {
    */
   async getBalance(ticker: string = 'KRW'): Promise<IAccount> {
     const balances = await this.getBalances()
-    const balance = balances.find(({ currency }) => currency === ticker)
+    const balance = balances.find(
+      ({ currency }) => currency === ticker.split('-')[1],
+    )
 
     if (!balance) {
       throw new Error('보유한 코인이 아닙니다.')
@@ -70,19 +72,16 @@ export default class Upbit extends Api {
     return balance
   }
 
-  /*
-  
-
   /**
-   * 특정 코인 지정가 매수
-   * @param IBuyLimitOrder
+   * 지정가 매수
+   * @param ILimitOrder
    * @returns Promise<IOrderResult>
    */
   async buyLimitOrder({
     ticker,
     price,
     volume,
-  }: IBuyLimitOrder): Promise<IOrderResult> {
+  }: ILimitOrder): Promise<IOrderResult> {
     const url = 'https://api.upbit.com/v1/orders'
     const data = {
       market: ticker,
@@ -99,20 +98,66 @@ export default class Upbit extends Api {
   }
 
   /**
-   * 특정 코인 시장가 매수
-   * @param IBuyMarketOrder
+   * 시장가 매수
+   * @param IMarketOrder
    * @returns Promise<IOrderResult>
    */
-  async buyMarketOrder({
-    ticker,
-    price,
-  }: IBuyMarketOrder): Promise<IOrderResult> {
+  async buyMarketOrder({ ticker, price }: IMarketOrder): Promise<IOrderResult> {
     const url = 'https://api.upbit.com/v1/orders'
     const data = {
       market: ticker,
       side: 'bid',
       price: String(price),
       ord_type: 'price',
+    }
+    const headers = this.getHeaders(data)
+
+    const { data: result } = await super.post<IOrderResult>(url, data, headers)
+
+    return result
+  }
+
+  /**
+   * 지정가 매도
+   * @param ILimitOrder
+   * @returns Promise<IOrderResult>
+   */
+  async sellLimitOrder({
+    ticker,
+    price,
+    volume,
+  }: ILimitOrder): Promise<IOrderResult> {
+    const url = 'https://api.upbit.com/v1/orders'
+    const data = {
+      market: ticker,
+      side: 'ask',
+      volume: String(volume),
+      price: String(price),
+      ord_type: 'limit',
+    }
+
+    const headers = this.getHeaders(data)
+
+    const { data: result } = await super.post<IOrderResult>(url, data, headers)
+
+    return result
+  }
+
+  /**
+   * 시장가 매도
+   * @param IMarketOrder
+   * @returns Promise<IOrderResult>
+   */
+  async sellMarketOrder({
+    ticker,
+    volume,
+  }: IMarketOrder): Promise<IOrderResult> {
+    const url = 'https://api.upbit.com/v1/orders'
+    const data = {
+      market: ticker,
+      side: 'ask',
+      volume: String(volume),
+      ord_type: 'market',
     }
     const headers = this.getHeaders(data)
 

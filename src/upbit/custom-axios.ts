@@ -13,8 +13,8 @@ export default class CustomAxios extends AuthorizationToken {
   }
 
   /**
-   * 업비트 ACCESS_KEY, SECRET_KEY 필요없이 사용가능한 API
-   * @param IAxiosProps method: Method, url: string
+   * @desc 업비트 ACCESS_KEY, SECRET_KEY 필요없이 사용가능한 API
+   * @param IAxiosProps
    * @returns Promise<AxiosResponse<T>>
    */
   protected async getData<T>({

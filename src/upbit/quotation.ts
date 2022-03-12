@@ -1,126 +1,29 @@
 import CustomAxios from './custom-axios'
 import moment from 'moment-timezone'
-
-interface IMarketAll {
-  market: string
-  korean_name: string
-  english_name: string
-}
-
-interface ITickersProps {
-  fiat?: string
-}
-
-interface IOhlcvProps {
-  ticker?: string
-  interval?:
-    | 'day'
-    | 'days'
-    | 'minute1'
-    | 'minutes1'
-    | 'minute3'
-    | 'minutes3'
-    | 'minute5'
-    | 'minutes5'
-    | 'minute15'
-    | 'minutes15'
-    | 'minute30'
-    | 'minutes30'
-    | 'minute60'
-    | 'minutes60'
-    | 'minute240'
-    | 'minutes240'
-    | 'week'
-    | 'weeks'
-    | 'month'
-    | 'months'
-  count?: number
-  to?: string
-}
-
-interface ICandle {
-  market: string
-  candle_date_time_utc: string
-  candle_date_time_kst: string
-  opening_price: number
-  high_price: number
-  low_price: number
-  trade_price: number
-  timestamp: number
-  candle_acc_trade_price: number
-  candle_acc_trade_volume: number
-  prev_closing_price: number
-  change_price: number
-  change_rate: number
-}
-
-interface IOhlcv {
-  data: string
-  open: number
-  high: number
-  low: number
-  close: number
-  volume: number
-  value: number
-}
-
-interface ICurrentPriceProps {
-  ticker?: string
-}
-
-interface ISnapShot {
-  market: string
-  trade_date: string
-  trade_time: string
-  trade_date_kst: string
-  trade_time_kst: string
-  trade_timestamp: number
-  opening_price: number
-  high_price: number
-  low_price: number
-  trade_price: number
-  prev_closing_price: number
-  change: string
-  change_price: number
-  change_rate: number
-  signed_change_price: number
-  signed_change_rate: number
-  trade_volume: number
-  acc_trade_price: number
-  acc_trade_price_24h: number
-  acc_trade_volume: number
-  acc_trade_volume_24h: number
-  highest_52_week_price: number
-  highest_52_week_date: string
-  lowest_52_week_price: number
-  lowest_52_week_date: string
-  timestamp: number
-}
-
-interface IOrderbookProps {
-  ticker?: string
-}
-
-interface IOrderbook {
-  market: string
-  timestamp: number
-  total_ask_size: number
-  total_bid_size: number
-  orderbook_units: {
-    ask_price: number
-    bid_price: number
-    ask_size: number
-    bid_size: number
-  }
-}
+import {
+  ICurrentPriceProps,
+  IOhlcv,
+  IOhlcvProps,
+  IOrderbookProps,
+  ITickersProps,
+} from './interfaces/quotations'
+import {
+  ICandle,
+  IMarketAll,
+  IOrderbook,
+  ISnapShot,
+} from './interfaces/upbit-api'
 
 export default class Quotation extends CustomAxios {
+  /**
+   * @desc ACCESS_KEY, SECRET_KEY 필요없음
+   */
   constructor() {
     super()
   }
 
   /**
-   * @desc 업비트 TICKER 코드 조회 (ACCESS_KEY, SECRET_KEY 필요없음)
+   * @desc 업비트 TICKER 코드 조회
    * @param ITickersProps
    * @returns Promise<string[]>
    */
@@ -143,7 +46,7 @@ export default class Quotation extends CustomAxios {
   }
 
   /**
-   * @desc 업비트 캔들 조회를 위한 URL 조회 (ACCESS_KEY, SECRET_KEY 필요없음)
+   * @desc 업비트 캔들 조회를 위한 URL 조회
    * @param interval: string
    * @returns string
    */
@@ -174,7 +77,7 @@ export default class Quotation extends CustomAxios {
   }
 
   /**
-   * @desc 업비트 캔들 조회 (ACCESS_KEY, SECRET_KEY 필요없음)
+   * @desc 업비트 캔들 조회
    * @param IOhlcvProps
    * @returns Promise<IOhlcv[]>
    */
@@ -222,7 +125,7 @@ export default class Quotation extends CustomAxios {
   }
 
   /**
-   * @desc 업비트 특정 TICKER 현재가 조회 (ACCESS_KEY, SECRET_KEY 필요없음)
+   * @desc 업비트 특정 TICKER 현재가 조회
    * @param ICurrentPriceProps
    * @returns Promise<number>
    */
@@ -243,11 +146,13 @@ export default class Quotation extends CustomAxios {
   }
 
   /**
-   * @desc 업비트 특정 TICKER 호가 조회 (ACCESS_KEY, SECRET_KEY 필요없음)
+   * @desc 업비트 특정 TICKER 호가 조회
    * @param IOrderbookProps
    * @returns Promise<IOrderbook>
    */
-  async getOrderbook({ ticker = 'KRW-BTC' }: IOrderbookProps) {
+  async getOrderbook({
+    ticker = 'KRW-BTC',
+  }: IOrderbookProps): Promise<IOrderbook> {
     try {
       const url = 'https://api.upbit.com/v1/orderbook'
 

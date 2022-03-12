@@ -1,5 +1,5 @@
 import moment from 'moment-timezone'
-import Api from './public/api'
+import Api from './api'
 import {
   ICurrentPriceProps,
   IOhlcv,
@@ -103,8 +103,10 @@ export default class Quotation extends Api {
 
     const out = []
     for (const item of data) {
+      const datetime = moment(item.candle_date_time_kst)
+
       out.push({
-        date: item.candle_date_time_kst,
+        datetime,
         open: item.opening_price,
         high: item.high_price,
         low: item.low_price,

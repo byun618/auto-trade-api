@@ -3,7 +3,7 @@
  * @param price: number
  * @returns number
  */
-export const getTickSize = (price: number): number => {
+const getTickSize = (price: number): number => {
   if (price >= 2000000) {
     return Math.floor(price / 1000) * 1000
   } else if (price >= 1000000) {
@@ -23,4 +23,8 @@ export const getTickSize = (price: number): number => {
   } else {
     return Math.floor(price / 0.01) / 100
   }
+}
+
+export default {
+  getTickSize,
 }

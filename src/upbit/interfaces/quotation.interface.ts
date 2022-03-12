@@ -1,3 +1,5 @@
+import { Moment } from 'moment-timezone'
+
 export interface ITickersProps {
   fiat?: string
 }
@@ -30,7 +32,7 @@ export interface IOhlcvProps {
 }
 
 export interface IOhlcv {
-  date: string
+  datetime: Moment
   open: number
   high: number
   low: number

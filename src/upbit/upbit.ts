@@ -4,7 +4,7 @@ import querystring from 'querystring'
 import { v4 as uuidv4 } from 'uuid'
 import { IAccount, IOrderResult } from './interfaces/upbit-api.interface'
 import { ILimitOrder, IMarketOrder } from './interfaces/upbit.inerface'
-import Api from './public/api'
+import Api from './api'
 
 export default class Upbit extends Api {
   private readonly access: string

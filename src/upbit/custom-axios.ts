@@ -13,7 +13,7 @@ export default class CustomAxios extends AuthorizationToken {
   }
 
   /**
-   * @desc 업비트 ACCESS_KEY, SECRET_KEY 필요없이 사용가능한 API
+   * 업비트 ACCESS_KEY, SECRET_KEY 필요없이 사용가능한 API
    * @param IAxiosProps
    * @returns Promise<AxiosResponse<T>>
    */
@@ -24,6 +24,33 @@ export default class CustomAxios extends AuthorizationToken {
     return await axios({
       method,
       url,
+    })
+  }
+
+  protected async getAuthData<T>({
+    method,
+    url,
+  }: IAxiosProps): Promise<AxiosResponse<T>> {
+    const token = super.getAuthorizationTokenNoParam()
+
+    return await axios({
+      method,
+      url,
+      headers: { Authorization: token },
+    })
+  }
+
+  protected async getAuthParamData<T>({
+    method,
+    url,
+    params = {},
+  }: IAxiosProps): Promise<AxiosResponse<T>> {
+    const { token, query } = super.getAuthorizationToken(params)
+
+    return await axios({
+      method,
+      url: `${url}?${query}`,
+      headers: { Authorization: token },
     })
   }
 }

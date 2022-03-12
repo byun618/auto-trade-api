@@ -6,7 +6,7 @@ import {
   IOhlcvProps,
   IOrderbookProps,
   ITickersProps,
-} from './interfaces/quotations'
+} from './interfaces/quotation'
 import {
   ICandle,
   IMarketAll,
@@ -16,14 +16,14 @@ import {
 
 export default class Quotation extends CustomAxios {
   /**
-   * @desc ACCESS_KEY, SECRET_KEY 필요없음
+   * ACCESS_KEY, SECRET_KEY 필요없음
    */
   constructor() {
     super()
   }
 
   /**
-   * @desc 업비트 TICKER 코드 조회
+   * 업비트 TICKER 코드 조회
    * @param ITickersProps
    * @returns Promise<string[]>
    */
@@ -46,7 +46,7 @@ export default class Quotation extends CustomAxios {
   }
 
   /**
-   * @desc 업비트 캔들 조회를 위한 URL 조회
+   * 업비트 캔들 조회를 위한 URL 조회
    * @param interval: string
    * @returns string
    */
@@ -77,7 +77,7 @@ export default class Quotation extends CustomAxios {
   }
 
   /**
-   * @desc 업비트 캔들 조회
+   * 업비트 캔들 조회
    * @param IOhlcvProps
    * @returns Promise<IOhlcv[]>
    */
@@ -125,7 +125,7 @@ export default class Quotation extends CustomAxios {
   }
 
   /**
-   * @desc 업비트 특정 TICKER 현재가 조회
+   * 업비트 특정 TICKER 현재가 조회
    * @param ICurrentPriceProps
    * @returns Promise<number>
    */
@@ -146,7 +146,7 @@ export default class Quotation extends CustomAxios {
   }
 
   /**
-   * @desc 업비트 특정 TICKER 호가 조회
+   * 업비트 특정 TICKER 호가 조회
    * @param IOrderbookProps
    * @returns Promise<IOrderbook>
    */

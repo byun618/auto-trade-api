@@ -55,6 +55,6 @@ export default class AuthorizationToken {
     }
 
     const jwtToken = jwt.sign(payload, this.UBIT_SECRET_KEY)
-    return { authorizationToken: `Bearer ${jwtToken}`, query }
+    return { token: `Bearer ${jwtToken}`, query }
   }
 }

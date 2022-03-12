@@ -1,4 +1,5 @@
 import axios, { AxiosResponse, Method } from 'axios'
+import { UpbitError } from './error.helper'
 
 interface IRequestProps {
   method: Method
@@ -16,13 +17,23 @@ export default class Api {
     data,
     headers,
   }: IRequestProps): Promise<AxiosResponse<T>> {
-    return await axios({
-      method,
-      url,
-      params,
-      data,
-      headers,
-    })
+    try {
+      const res = await axios({
+        method,
+        url,
+        params,
+        data,
+        headers,
+      })
+
+      return res
+    } catch (err) {
+      const {
+        response: { data },
+      } = err
+
+      throw new UpbitError(data.error.name, data.error.message)
+    }
   }
 
   protected async get<T>(

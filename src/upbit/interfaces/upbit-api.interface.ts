@@ -88,3 +88,8 @@ export interface IOrderResult {
   executed_volume: string
   trades_count: number
 }
+
+export interface IUpbitError {
+  name: string
+  message: string
+}

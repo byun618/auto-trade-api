@@ -1,5 +1,5 @@
 import moment from 'moment-timezone'
-import Api from './api'
+import Api from './public/api'
 import {
   ICurrentPriceProps,
   IOhlcv,

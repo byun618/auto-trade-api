@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken'
 import querystring from 'querystring'
 import { v4 as uuidv4 } from 'uuid'
 import { IAccount, IOrderResult } from './interfaces/upbit-api.interface'
-import { IBuyMarketOrder } from './interfaces/upbit.inerface'
+import { IBuyLimitOrder, IBuyMarketOrder } from './interfaces/upbit.inerface'
 import Api from './public/api'
 
 export default class Upbit extends Api {
@@ -68,6 +68,34 @@ export default class Upbit extends Api {
     }
 
     return balance
+  }
+
+  /*
+  
+
+  /**
+   * 특정 코인 지정가 매수
+   * @param IBuyLimitOrder
+   * @returns Promise<IOrderResult>
+   */
+  async buyLimitOrder({
+    ticker,
+    price,
+    volume,
+  }: IBuyLimitOrder): Promise<IOrderResult> {
+    const url = 'https://api.upbit.com/v1/orders'
+    const data = {
+      market: ticker,
+      side: 'bid',
+      volume: String(volume),
+      price: String(price),
+      ord_type: 'limit',
+    }
+    const headers = this.getHeaders(data)
+
+    const { data: result } = await super.post<IOrderResult>(url, data, headers)
+
+    return result
   }
 
   /**

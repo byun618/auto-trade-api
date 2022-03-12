@@ -6,13 +6,13 @@ import {
   IOhlcvProps,
   IOrderbookProps,
   ITickersProps,
-} from './interfaces/quotation'
+} from './interfaces/quotation.interface'
 import {
   ICandle,
   IMarketAll,
   IOrderbook,
   ISnapShot,
-} from './interfaces/upbit-api'
+} from './interfaces/upbit-api.interface'
 
 export default class Quotation extends Api {
   /**

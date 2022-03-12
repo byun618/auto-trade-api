@@ -1,5 +1,5 @@
-import CustomAxios from './custom-axios'
 import moment from 'moment-timezone'
+import Api from './api'
 import {
   ICurrentPriceProps,
   IOhlcv,
@@ -14,7 +14,7 @@ import {
   ISnapShot,
 } from './interfaces/upbit-api'
 
-export default class Quotation extends CustomAxios {
+export default class Quotation extends Api {
   /**
    * ACCESS_KEY, SECRET_KEY 필요없음
    */
@@ -28,10 +28,8 @@ export default class Quotation extends CustomAxios {
    * @returns Promise<string[]>
    */
   async getTickers({ fiat = null }: ITickersProps): Promise<string[]> {
-    const { data } = await super.getData<IMarketAll[]>({
-      method: 'GET',
-      url: 'https://api.upbit.com/v1/market/all',
-    })
+    const url = 'https://api.upbit.com/v1/market/all'
+    const { data } = await super.get<IMarketAll[]>(url)
 
     const out = []
     for (const item of data) {
@@ -50,7 +48,7 @@ export default class Quotation extends CustomAxios {
    * @param interval: string
    * @returns string
    */
-  getUrlOhlcv(interval: string) {
+  private getUrlOhlcv(interval: string) {
     if (['day', 'days'].includes(interval)) {
       return 'https://api.upbit.com/v1/candles/days'
     } else if (['minute1', 'minutes1'].includes(interval)) {
@@ -99,10 +97,9 @@ export default class Quotation extends CustomAxios {
 
     const _to = moment(to).utc().format('YYYY-MM-DD HH:mm:ss')
 
-    const { data } = await super.getData<ICandle[]>({
-      method: 'GET',
-      url: `${url}?market=${ticker}&count=${count}${to ? `&to=${_to}` : ''}`,
-    })
+    const { data } = await super.get<ICandle[]>(
+      `${url}?market=${ticker}&count=${count}${to ? `&to=${_to}` : ''}`,
+    )
 
     const out = []
     for (const item of data) {
@@ -129,10 +126,7 @@ export default class Quotation extends CustomAxios {
     ticker = 'KRW-BTC',
   }: ICurrentPriceProps): Promise<number> {
     const url = 'https://api.upbit.com/v1/ticker'
-    const { data } = await super.getData<ISnapShot[]>({
-      method: 'GET',
-      url: `${url}?markets=${ticker}`,
-    })
+    const { data } = await super.get<ISnapShot[]>(`${url}?markets=${ticker}`)
 
     return data[0].trade_price
   }
@@ -147,10 +141,7 @@ export default class Quotation extends CustomAxios {
   }: IOrderbookProps): Promise<IOrderbook> {
     const url = 'https://api.upbit.com/v1/orderbook'
 
-    const { data } = await super.getData<IOrderbook[]>({
-      method: 'GET',
-      url: `${url}?markets=${ticker}`,
-    })
+    const { data } = await super.get<IOrderbook[]>(`${url}?markets=${ticker}`)
 
     return data[0]
   }

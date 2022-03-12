@@ -1,5 +1,4 @@
 import createError from 'http-errors'
-import { IUpbitError } from '../interfaces/upbit-api.interface'
 
 export class UpbitError extends createError.BadRequest {
   name: string

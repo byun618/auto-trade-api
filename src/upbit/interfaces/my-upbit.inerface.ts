@@ -2,7 +2,7 @@ export interface IBalancesProps {
   ticker?: string
 }
 
-export interface IGetMarketOrder {
+export interface IBuyMarketOrder {
   ticker: string
   price: number
 }

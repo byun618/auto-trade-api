@@ -37,4 +37,17 @@ export default class Api {
       headers,
     })
   }
+
+  protected async post<T>(
+    url: string,
+    data?: {},
+    headers?: {},
+  ): Promise<AxiosResponse<T>> {
+    return await this.request({
+      method: 'POST',
+      url,
+      data,
+      headers,
+    })
+  }
 }

@@ -70,3 +70,21 @@ export interface IAccount {
   avg_buy_price_modified: boolean
   unit_currency: string
 }
+
+export interface IOrderResult {
+  uuid: string
+  side: string
+  ord_type: string
+  price: string
+  state: string
+  market: string
+  created_at: string
+  volume: string
+  remaining_volume: string
+  reserved_fee: string
+  remaining_fee: string
+  paid_fee: string
+  locked: string
+  executed_volume: string
+  trades_count: number
+}

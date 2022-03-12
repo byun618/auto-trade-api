@@ -88,12 +88,12 @@ export default class Quotation extends Api {
   }: IOhlcvProps): Promise<IOhlcv[]> {
     const MAX_CALL_COUNT = 200
     if (count > MAX_CALL_COUNT) {
-      throw new Error('count must be less than 200')
+      throw new Error('200을 넘게 조회할 수 없습니다.')
     }
 
     const url = this.getUrlOhlcv(interval)
     if (!url) {
-      throw new Error('invalid interval')
+      throw new Error('잘못된 시간 간격 입니다.')
     }
 
     const _to = moment(to).utc().format('YYYY-MM-DD HH:mm:ss')

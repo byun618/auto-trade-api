@@ -31,6 +31,12 @@ export interface IOhlcvProps {
   to?: string
 }
 
+export interface IOhlcvRangeBaseProps {
+  ticker: string
+  start: number
+  elapse: number
+}
+
 export interface IOhlcv {
   datetime: Moment
   open: number

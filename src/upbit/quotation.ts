@@ -4,6 +4,7 @@ import {
   ICurrentPriceProps,
   IOhlcv,
   IOhlcvProps,
+  IOhlcvRangeBaseProps,
   IOrderbookProps,
   ITickersProps,
 } from './interfaces/quotation.interface'
@@ -117,6 +118,42 @@ export default class Quotation extends Api {
     }
 
     return out.reverse()
+  }
+
+  async getOhlcvRangeBase({
+    ticker,
+    start,
+    elapse,
+  }: IOhlcvRangeBaseProps): Promise<IOhlcv> {
+    const date = moment()
+      .set({
+        hour: start,
+        minute: 0,
+        second: 0,
+        millisecond: 0,
+      })
+      .subtract(1, 'day')
+
+    const result = await this.getOhlcv({
+      ticker,
+      interval: 'minute60',
+      to: date.add(elapse, 'hour').format('YYYY-MM-DD HH:mm:ss'),
+      count: elapse,
+    })
+
+    if (result.length <= 0) {
+      throw new Error('잘못된 범위 입니다.')
+    }
+
+    return {
+      datetime: result[0].datetime,
+      open: result[0].open,
+      high: Math.max(...result.map(({ high }) => high)),
+      low: Math.min(...result.map(({ low }) => low)),
+      close: result[result.length - 1].close,
+      volume: result.reduce((acc, { volume }) => acc + volume, 0),
+      value: result.reduce((acc, { value }) => acc + value, 0),
+    }
   }
 
   /**

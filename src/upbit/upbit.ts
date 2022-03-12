@@ -2,7 +2,11 @@ import crypto from 'crypto'
 import jwt from 'jsonwebtoken'
 import querystring from 'querystring'
 import { v4 as uuidv4 } from 'uuid'
-import { IAccount, IOrderResult } from './interfaces/upbit-api.interface'
+import {
+  IAccount,
+  IOrder,
+  IOrderResult,
+} from './interfaces/upbit-api.interface'
 import { ILimitOrder, IMarketOrder } from './interfaces/upbit.inerface'
 import Api from './api'
 
@@ -162,6 +166,23 @@ export default class Upbit extends Api {
     const headers = this.getHeaders(data)
 
     const { data: result } = await super.post<IOrderResult>(url, data, headers)
+
+    return result
+  }
+
+  /**
+   * 주문 UUID로 개별 주문건 조회
+   * @param uuid: string
+   * @returns
+   */
+  async getOrder(uuid: string): Promise<IOrder> {
+    const url = 'https://api.upbit.com/v1/order'
+    const data = {
+      uuid,
+    }
+    const headers = this.getHeaders(data)
+
+    const { data: result } = await super.get<IOrder>(url, data, headers)
 
     return result
   }

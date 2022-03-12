@@ -93,3 +93,32 @@ export interface IUpbitError {
   name: string
   message: string
 }
+
+interface ITrade {
+  market: string
+  uuid: string
+  price: string
+  volume: string
+  funds: string
+  created_at: string
+  side: string
+}
+
+export interface IOrder {
+  uuid: string
+  side: string
+  ord_type: string
+  price: string
+  state: string
+  market: string
+  created_at: string
+  volume: string
+  remaining_volume: string
+  reserved_fee: string
+  remaining_fee: string
+  paid_fee: string
+  locked: string
+  executed_volume: string
+  trades_count: number
+  trades: ITrade[]
+}

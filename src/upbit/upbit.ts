@@ -139,7 +139,6 @@ export default class Upbit extends Api {
       price: String(price),
       ord_type: 'limit',
     }
-
     const headers = this.getHeaders(data)
 
     const { data: result } = await super.post<IOrderResult>(url, data, headers)

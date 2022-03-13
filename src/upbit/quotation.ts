@@ -76,7 +76,7 @@ export default class Quotation extends Api {
   }
 
   /**
-   * 업비트 캔들 조회
+   * 업비트 ohlcv 조회
    * @param IOhlcvProps
    * @returns Promise<IOhlcv[]>
    */
@@ -120,24 +120,20 @@ export default class Quotation extends Api {
     return out.reverse()
   }
 
+  /**
+   * to와 elapse를 이용해 지정한 범위의 ohlcv 조회
+   * @param param0
+   * @returns Promise<IOhlcv>
+   */
   async getOhlcvRangeBase({
     ticker,
-    start,
+    to,
     elapse,
   }: IOhlcvRangeBaseProps): Promise<IOhlcv> {
-    const date = moment()
-      .set({
-        hour: start,
-        minute: 0,
-        second: 0,
-        millisecond: 0,
-      })
-      .subtract(1, 'day')
-
     const result = await this.getOhlcv({
       ticker,
       interval: 'minute60',
-      to: date.add(elapse, 'hour').format('YYYY-MM-DD HH:mm:ss'),
+      to,
       count: elapse,
     })
 

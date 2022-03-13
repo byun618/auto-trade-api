@@ -33,7 +33,7 @@ export interface IOhlcvProps {
 
 export interface IOhlcvRangeBaseProps {
   ticker: string
-  start: number
+  to: string
   elapse: number
 }
 

@@ -7,7 +7,7 @@
   "license": "MIT",
   "scripts": {
     "build": "rm -rf dist && tsc",
-    "dev:server": "ts-node -r dotenv/config ./src/index.ts"
+    "dev:server": "ts-node-dev -r dotenv/config ./src/index.ts"
   },
   "dependencies": {
     "axios": "^0.26.1",

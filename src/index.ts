@@ -1,42 +1,48 @@
 import http from 'http'
+import moment from 'moment-timezone'
 import { Server } from 'socket.io'
 import { initApp } from './express-app'
 import { SocketProps } from './public/interfaces'
-// import Vb from './vb/vb'
+import { connectMongoDb } from './public/utils'
+import { initVb, updateUserTicker } from './vb'
 
 const PORT = process.env.APP_PORT || 3001
 
-const app = initApp()
-const server = http.createServer(app)
-const io = new Server(server, {
-  cors: { origin: '*', methods: ['GET', 'POST'] },
-})
-// const tickerList = {}
-
-io.on('connection', async (socket: SocketProps) => {
-  // TODO: 소켓 연결시 처리
-  const query = socket.handshake.query
-  socket.identifier = query.identifier
-
-  console.log(`${socket.id}|${socket.identifier} connected`)
-
-  // socket.on('init', (data) => {
-  //   const { ticker, start, elapse } = data
-
-  //   tickerList[`${ticker}-${start}-${elapse}`] = new Vb({
-  //     ticker,
-  //     start,
-  //     elapse,
-  //     access: process.env.UPBIT_ACCESS_KEY,
-  //     secret: process.env.UPBIT_SECRET_KEY,
-  //   })
-  // })
-
-  socket.on('disconnect', () => {
-    console.log(`${socket.id}|${socket.identifier}: disconnected`)
+const serve = async () => {
+  const app = initApp()
+  const server = http.createServer(app)
+  const io = new Server(server, {
+    cors: { origin: '*', methods: ['GET', 'POST'] },
   })
-})
 
-server.listen(PORT, () => {
-  console.log(`${PORT} 포트에서 서버가 시작되었습니다! 🚀  🚀`)
-})
+  await connectMongoDb()
+
+  io.on('connection', async (socket: SocketProps) => {
+    const query = socket.handshake.query
+    socket.userTickerId = query.userTickerId
+
+    console.log(`${socket.id}|${socket.userTickerId} connected`)
+
+    socket.on('init', async (data) => {
+      const { userTickerId } = data
+      const vb = await initVb(userTickerId)
+      const target = vb.getTarget()
+
+      await updateUserTicker({ userTickerId, ...target })
+
+      console.log({ userTickerId, ...target })
+
+      socket.emit('init-res')
+    })
+
+    socket.on('disconnect', () => {
+      console.log(`${socket.id}|${socket.userTickerId}: disconnected`)
+    })
+  })
+
+  server.listen(PORT, () => {
+    console.log(`${PORT} 포트에서 서버가 시작되었습니다! 🚀  🚀`)
+  })
+}
+
+serve()

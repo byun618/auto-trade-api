@@ -2,6 +2,7 @@ import { Quotation, Upbit } from '../upbit'
 import { ISettingsProps, IVbProps } from './interfaces'
 import moment, { Moment } from 'moment-timezone'
 import { IOhlcv } from '../upbit/interfaces/quotation.interface'
+import { UserTicker } from '../models/user-tickers'
 
 export default class Vb {
   private ticker: string
@@ -45,6 +46,14 @@ export default class Vb {
     this.ticker = ticker
     this.start = start
     this.elapse = elapse
+  }
+
+  getTarget() {
+    return {
+      buyTime: this.buyTime.format('YYYY-MM-DD H시 m분'),
+      sellTime: this.sellTime.format('YYYY-MM-DD H시 m분'),
+      targetPrice: this.targetPrice,
+    }
   }
 
   /**
@@ -115,6 +124,7 @@ export default class Vb {
     const noise = 1 - Math.abs(open - close) / range
 
     const targetPrice = range * noise + currentData.open
+
     this.targetPrice = targetPrice
   }
 }

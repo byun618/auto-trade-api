@@ -26,10 +26,10 @@ router.post('/', async (req: Request, res: Response, next: NextFunction) => {
 })
 
 router.get('/:id', async (req: Request, res: Response, next: NextFunction) => {
-  const { id } = req.query
+  const { id } = req.params
 
   const userTicker = await UserTicker.findOne({
-    id: id,
+    _id: id,
   })
 
   res.json(userTicker)

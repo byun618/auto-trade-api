@@ -9,6 +9,9 @@ export interface IUserTicker extends Document {
   buyTime: string
   sellTime: string
   targetPrice: number
+  isStart: boolean
+  isHold: boolean
+  isSell: boolean
 
   createdAt: string
   updatedAt: string
@@ -23,6 +26,10 @@ const schema = new Schema<IUserTicker>(
     buyTime: String,
     sellTime: String,
     targetPrice: Number,
+    isStart: Boolean,
+    isHold: Boolean,
+    isSell: Boolean,
+
     createdAt: String,
     updatedAt: String,
   },

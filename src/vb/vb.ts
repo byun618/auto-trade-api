@@ -1,8 +1,7 @@
-import { Quotation, Upbit } from '../upbit'
-import { ISettingsProps, IVbProps } from './interfaces'
 import moment, { Moment } from 'moment-timezone'
-import { IOhlcv } from '../upbit/interfaces/quotation.interface'
-import { UserTicker } from '../models/user-tickers'
+import { sleep } from '../public/utils'
+import { Quotation, Upbit } from '../upbit'
+import { IGettarget, ISettingsProps, IVbProps } from './interfaces'
 
 export default class Vb {
   private ticker: string
@@ -13,6 +12,9 @@ export default class Vb {
   private buyTime: Moment
   private sellTime: Moment
   private targetPrice: number
+  private isStart: boolean
+  private isHold: boolean
+  private isSell: boolean
 
   /**
    * 프로그램 동작할 세팅으로 생성
@@ -48,11 +50,23 @@ export default class Vb {
     this.elapse = elapse
   }
 
-  getTarget() {
+  /**
+   * 타겟 매수 매도 시간, 가격을 반환
+   * @returns IGettarget
+   */
+  getTarget(): IGettarget {
     return {
       buyTime: this.buyTime.format('YYYY-MM-DD H시 m분'),
       sellTime: this.sellTime.format('YYYY-MM-DD H시 m분'),
       targetPrice: this.targetPrice,
+    }
+  }
+
+  getStatus() {
+    return {
+      isStart: this.isStart,
+      isHold: this.isHold,
+      isSell: this.isSell,
     }
   }
 
@@ -126,5 +140,18 @@ export default class Vb {
     const targetPrice = range * noise + currentData.open
 
     this.targetPrice = targetPrice
+  }
+
+  async run() {
+    this.isStart = true
+
+    while (this.isStart) {
+      console.log(1)
+      await sleep(1000)
+    }
+  }
+
+  stop() {
+    this.isStart = false
   }
 }

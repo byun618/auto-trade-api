@@ -1,10 +1,9 @@
 import http from 'http'
-import moment from 'moment-timezone'
 import { Server } from 'socket.io'
 import { initApp } from './express-app'
 import { SocketProps } from './public/interfaces'
 import { connectMongoDb } from './public/utils'
-import { initVb, updateUserTicker } from './vb'
+import { initVb, start, stop, updateUserTicker } from './vb'
 
 const PORT = process.env.APP_PORT || 3001
 
@@ -24,15 +23,28 @@ const serve = async () => {
     console.log(`${socket.id}|${socket.userTickerId} connected`)
 
     socket.on('init', async (data) => {
+      console.log(`${socket.id}|${socket.userTickerId} init`)
       const { userTickerId } = data
-      const vb = await initVb(userTickerId)
-      const target = vb.getTarget()
+      await initVb(userTickerId, socket)
+    })
 
-      await updateUserTicker({ userTickerId, ...target })
+    socket.on('start', async () => {
+      console.log(`${socket.id}|${socket.userTickerId} start`)
 
-      console.log({ userTickerId, ...target })
+      await updateUserTicker({
+        userTickerId: socket.userTickerId,
+        isStart: true,
+      })
 
-      socket.emit('init-res')
+      socket.emit('start-res', { message: '프로그램을 시작합니다.' })
+
+      start(String(socket.userTickerId))
+    })
+
+    socket.on('stop', async () => {
+      console.log(`${socket.id}|${socket.userTickerId} stop`)
+
+      stop(String(socket.userTickerId))
     })
 
     socket.on('disconnect', () => {

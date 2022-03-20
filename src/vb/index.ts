@@ -1,18 +1,30 @@
+import { Socket } from 'socket.io'
 import { UserTicker } from '../models/user-tickers'
 import Vb from './vb'
 
-const programList: any = {}
+const programList: {
+  [key: string]: Vb
+} = {}
 
-export const initVb = async (userTickerId: string): Promise<Vb> => {
-  if (programList[userTickerId]) {
-    return programList[userTickerId]
-  }
+export const initVb = async (userTickerId: string, socket: Socket) => {
+  let vb = programList[userTickerId]
+
+  // if (vb) {
+  //   const status = vb.getStatus()
+  //   if (status.isStart) {
+  //     socket.emit('init-res', { message: '이미 프로그램이 동작 중 입니다.' })
+  //     return
+  //   }
+
+  //   socket.emit('init-res', { message: '이미 프로그램이 초기화되었습니다.' })
+  //   return
+  // }
 
   const userTicker = await UserTicker.findOne({
     id: userTickerId,
   })
 
-  const vb = new Vb({
+  vb = new Vb({
     ticker: userTicker.name,
     start: userTicker.start,
     elapse: userTicker.elapse,
@@ -24,7 +36,14 @@ export const initVb = async (userTickerId: string): Promise<Vb> => {
   await vb.setTargetPrice()
 
   programList[userTickerId] = vb
-  return vb
+
+  const target = vb.getTarget()
+
+  socket.emit('init-res', {
+    userTickerId,
+    message: '프로그램을 초기화합니다.',
+    data: target,
+  })
 }
 
 export const updateUserTicker = async ({
@@ -32,20 +51,55 @@ export const updateUserTicker = async ({
   buyTime,
   sellTime,
   targetPrice,
+  isStart,
+  isHold,
+  isSell,
 }: {
-  userTickerId: string
-  buyTime: string
-  sellTime: string
-  targetPrice: number
+  userTickerId: string | string[] | undefined
+  buyTime?: string
+  sellTime?: string
+  targetPrice?: number
+  isStart?: boolean
+  isHold?: boolean
+  isSell?: boolean
 }) => {
-  const userTicker = await UserTicker.findOne({
-    id: userTickerId,
-  })
+  const updateObj = {}
 
-  userTicker.buyTime = buyTime
-  userTicker.sellTime = sellTime
-  userTicker.targetPrice = targetPrice
-  await userTicker.save()
+  if (buyTime) {
+    Object.assign(updateObj, { buyTime })
+  }
+  if (sellTime) {
+    Object.assign(updateObj, { sellTime })
+  }
+  if (targetPrice) {
+    Object.assign(updateObj, { targetPrice })
+  }
+  if (isStart) {
+    Object.assign(updateObj, { isStart })
+  }
+  if (isHold) {
+    Object.assign(updateObj, { isHold })
+  }
+  if (isSell) {
+    Object.assign(updateObj, { isSell })
+  }
+
+  await UserTicker.updateOne(
+    {
+      id: userTickerId,
+    },
+    updateObj,
+  )
 }
 
-export const run = async () => {}
+export const start = async (userTickerId: string) => {
+  const vb = programList[userTickerId]
+  vb.run()
+}
+
+export const stop = async (userTickerId: string) => {
+  const vb = programList[userTickerId]
+  vb.stop()
+
+  delete programList[userTickerId]
+}

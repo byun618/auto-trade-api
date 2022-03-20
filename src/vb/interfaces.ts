@@ -1,4 +1,7 @@
+import { Socket } from 'socket.io'
+
 export interface IVbProps {
+  socket: Socket
   access: string
   secret: string
   ticker?: string

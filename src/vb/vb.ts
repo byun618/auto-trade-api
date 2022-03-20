@@ -1,9 +1,11 @@
 import moment, { Moment } from 'moment-timezone'
+import { Socket } from 'socket.io'
 import { sleep } from '../public/utils'
 import { Quotation, Upbit } from '../upbit'
 import { IGettarget, ISettingsProps, IVbProps } from './interfaces'
 
 export default class Vb {
+  private socket: Socket
   private ticker: string
   private start: number
   private elapse: number
@@ -20,12 +22,14 @@ export default class Vb {
    * 프로그램 동작할 세팅으로 생성
    * @param IVbProps
    */
-  constructor({ access, secret, ticker, start, elapse }: IVbProps) {
+  constructor({ socket, access, secret, ticker, start, elapse }: IVbProps) {
+    this.socket = socket
     this.quotation = new Quotation()
     this.upbit = new Upbit(access, secret)
     this.ticker = ticker
     this.start = start
     this.elapse = elapse
+    this.isStart = false
   }
 
   /**
@@ -62,12 +66,24 @@ export default class Vb {
     }
   }
 
+  /**
+   * 현재 프로그램 상태를 반환
+   * @returns
+   */
   getStatus() {
     return {
       isStart: this.isStart,
       isHold: this.isHold,
       isSell: this.isSell,
     }
+  }
+
+  /**
+   * 소켓 연결을 업데이트
+   * @param socket
+   */
+  setSocket(socket: Socket) {
+    this.socket = socket
   }
 
   /**
@@ -146,7 +162,8 @@ export default class Vb {
     this.isStart = true
 
     while (this.isStart) {
-      console.log(1)
+      console.log(this.socket.id)
+      this.socket.emit('test', 'test')
       await sleep(1000)
     }
   }

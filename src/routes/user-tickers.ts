@@ -35,4 +35,39 @@ router.get('/:id', async (req: Request, res: Response, next: NextFunction) => {
   res.json(userTicker)
 })
 
+router.post('/:id', async (req: Request, res: Response, next: NextFunction) => {
+  const { id } = req.params
+  const { buyTime, sellTime, targetPrice, isStart, isHold, isSell } = req.body
+
+  const updateObj = {}
+
+  if (buyTime) {
+    Object.assign(updateObj, { buyTime })
+  }
+  if (sellTime) {
+    Object.assign(updateObj, { sellTime })
+  }
+  if (targetPrice) {
+    Object.assign(updateObj, { targetPrice })
+  }
+  if (isStart) {
+    Object.assign(updateObj, { isStart })
+  }
+  if (isHold) {
+    Object.assign(updateObj, { isHold })
+  }
+  if (isSell) {
+    Object.assign(updateObj, { isSell })
+  }
+
+  await UserTicker.updateOne(
+    {
+      id,
+    },
+    updateObj,
+  )
+
+  res.json({ message: 'OK' })
+})
+
 export default { url, router }

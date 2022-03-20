@@ -3,7 +3,7 @@ import { Server } from 'socket.io'
 import { initApp } from './express-app'
 import { SocketProps } from './public/interfaces'
 import { connectMongoDb } from './public/utils'
-import { initVb, start, stop, updateUserTicker } from './vb'
+import { initVb, start, stop } from './vb'
 
 const PORT = process.env.APP_PORT || 3001
 
@@ -30,21 +30,13 @@ const serve = async () => {
 
     socket.on('start', async () => {
       console.log(`${socket.id}|${socket.userTickerId} start`)
-
-      await updateUserTicker({
-        userTickerId: socket.userTickerId,
-        isStart: true,
-      })
-
-      socket.emit('start-res', { message: '프로그램을 시작합니다.' })
-
-      start(String(socket.userTickerId))
+      start(String(socket.userTickerId), socket)
     })
 
     socket.on('stop', async () => {
       console.log(`${socket.id}|${socket.userTickerId} stop`)
 
-      stop(String(socket.userTickerId))
+      stop(String(socket.userTickerId), socket)
     })
 
     socket.on('disconnect', () => {

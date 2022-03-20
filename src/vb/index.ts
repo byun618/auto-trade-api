@@ -9,22 +9,26 @@ const programList: {
 export const initVb = async (userTickerId: string, socket: Socket) => {
   let vb = programList[userTickerId]
 
-  // if (vb) {
-  //   const status = vb.getStatus()
-  //   if (status.isStart) {
-  //     socket.emit('init-res', { message: '이미 프로그램이 동작 중 입니다.' })
-  //     return
-  //   }
+  if (vb) {
+    const { isStart } = vb.getStatus()
 
-  //   socket.emit('init-res', { message: '이미 프로그램이 초기화되었습니다.' })
-  //   return
-  // }
+    if (isStart) {
+      socket.emit('init-res', { message: '이미 프로그램이 동작중입니다.' })
+      vb.setSocket(socket)
+
+      return
+    }
+
+    socket.emit('init-res', { message: '이미 프로그램이 초기화되었습니다.' })
+    return
+  }
 
   const userTicker = await UserTicker.findOne({
     id: userTickerId,
   })
 
   vb = new Vb({
+    socket,
     ticker: userTicker.name,
     start: userTicker.start,
     elapse: userTicker.elapse,
@@ -32,74 +36,40 @@ export const initVb = async (userTickerId: string, socket: Socket) => {
     secret: process.env.UPBIT_SECRET_KEY,
   })
 
-  vb.setTargetTime()
-  await vb.setTargetPrice()
-
   programList[userTickerId] = vb
-
-  const target = vb.getTarget()
+  // targetPrice가 계속 바뀜
 
   socket.emit('init-res', {
     userTickerId,
     message: '프로그램을 초기화합니다.',
-    data: target,
   })
 }
 
-export const updateUserTicker = async ({
-  userTickerId,
-  buyTime,
-  sellTime,
-  targetPrice,
-  isStart,
-  isHold,
-  isSell,
-}: {
-  userTickerId: string | string[] | undefined
-  buyTime?: string
-  sellTime?: string
-  targetPrice?: number
-  isStart?: boolean
-  isHold?: boolean
-  isSell?: boolean
-}) => {
-  const updateObj = {}
-
-  if (buyTime) {
-    Object.assign(updateObj, { buyTime })
-  }
-  if (sellTime) {
-    Object.assign(updateObj, { sellTime })
-  }
-  if (targetPrice) {
-    Object.assign(updateObj, { targetPrice })
-  }
-  if (isStart) {
-    Object.assign(updateObj, { isStart })
-  }
-  if (isHold) {
-    Object.assign(updateObj, { isHold })
-  }
-  if (isSell) {
-    Object.assign(updateObj, { isSell })
-  }
-
-  await UserTicker.updateOne(
-    {
-      id: userTickerId,
-    },
-    updateObj,
-  )
-}
-
-export const start = async (userTickerId: string) => {
+export const start = async (userTickerId: string, socket: Socket) => {
   const vb = programList[userTickerId]
+  const { isStart } = vb.getStatus()
+
+  if (isStart) {
+    socket.emit('start-res', { message: '프로그램이 이미 시작되었습니다.' })
+    return
+  }
+
+  socket.emit('start-res', { message: '프로그램을 시작합니다.' })
+
   vb.run()
 }
 
-export const stop = async (userTickerId: string) => {
+export const stop = async (userTickerId: string, socket: Socket) => {
   const vb = programList[userTickerId]
-  vb.stop()
+  const { isStart } = vb.getStatus()
 
+  if (!isStart) {
+    socket.emit('start-res', { message: '프로그램이 이미 정지되었습니다.' })
+    return
+  }
+
+  socket.emit('start-res', { message: '프로그램을 정지합니다.' })
+
+  vb.stop()
   delete programList[userTickerId]
 }

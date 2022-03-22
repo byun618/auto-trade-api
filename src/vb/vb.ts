@@ -143,7 +143,6 @@ export default class Vb {
       interval: 'minute60',
       count: 1,
     })
-    console.log(currentData)
 
     const { open, high, low, close } = previousData
     const range = high - low

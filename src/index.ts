@@ -16,6 +16,7 @@ const serve = async () => {
 
   await connectMongoDb()
 
+  // TODO: 프로그램 에러시 소켓 통신 어떻게 해야하나
   io.on('connection', async (socket: SocketProps) => {
     const query = socket.handshake.query
     socket.userTickerId = query.userTickerId

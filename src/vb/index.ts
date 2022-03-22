@@ -37,7 +37,7 @@ export const initVb = async (userTickerId: string, socket: Socket) => {
   })
 
   programList[userTickerId] = vb
-  // targetPrice가 계속 바뀜
+  // TODO: DB에 저장되어 있는 상태 그대로 이식 필요
 
   socket.emit('init-res', {
     userTickerId,
@@ -72,4 +72,11 @@ export const stop = async (userTickerId: string, socket: Socket) => {
 
   vb.stop()
   delete programList[userTickerId]
+}
+
+export const getCurrentPrice = async (userTickerId: string, socket: Socket) => {
+  const vb = programList[userTickerId]
+  const currentPrice = await vb.getCurrentPrice()
+
+  socket.emit('current-price-res', { currentPrice })
 }

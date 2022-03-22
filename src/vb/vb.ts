@@ -1,11 +1,11 @@
 import moment, { Moment } from 'moment-timezone'
-import { Socket } from 'socket.io'
+import { SocketProps } from '../public/interfaces'
 import { sleep } from '../public/utils'
 import { Quotation, Upbit } from '../upbit'
-import { IGettarget, ISettingsProps, IVbProps } from './interfaces'
+import { ISettingsProps, IVbProps } from './interfaces'
 
 export default class Vb {
-  private socket: Socket
+  private socket: SocketProps
   private ticker: string
   private start: number
   private elapse: number
@@ -55,18 +55,6 @@ export default class Vb {
   }
 
   /**
-   * 타겟 매수 매도 시간, 가격을 반환
-   * @returns IGettarget
-   */
-  getTarget(): IGettarget {
-    return {
-      buyTime: this.buyTime.format('YYYY-MM-DD H시 m분'),
-      sellTime: this.sellTime.format('YYYY-MM-DD H시 m분'),
-      targetPrice: this.targetPrice,
-    }
-  }
-
-  /**
    * 현재 프로그램 상태를 반환
    * @returns
    */
@@ -82,14 +70,14 @@ export default class Vb {
    * 소켓 연결을 업데이트
    * @param socket
    */
-  setSocket(socket: Socket) {
+  setSocket(socket: SocketProps) {
     this.socket = socket
   }
 
   /**
    * 지정한 start와 elapse에 맞게 프로그램이 돌도록 시간 설정
    */
-  setTargetTime(): void {
+  setTargetTime(): { buyTime: string; sellTime: string } {
     if (!this.start || !this.elapse) {
       throw new Error('설정을 먼저 세팅해주세요')
     }
@@ -103,6 +91,7 @@ export default class Vb {
 
     // 프로그램 시작 시간 허용 한도
     if (moment().isAfter(buyTime.clone().add(1, 'hour'))) {
+      // TODO: 아예 동작을 못하게
       buyTime.add(1, 'day')
     }
 
@@ -113,12 +102,17 @@ export default class Vb {
 
     this.buyTime = buyTime
     this.sellTime = sellTime
+
+    return {
+      buyTime: moment(this.buyTime).format('YYYY-MM-DD H시 m분'),
+      sellTime: moment(this.sellTime).format('YYYY-MM-DD H시 m분'),
+    }
   }
 
   /**
    * 설정값에 맞게 타겟 가격 설정
    */
-  async setTargetPrice(): Promise<void> {
+  async setTargetPrice(): Promise<number> {
     if (!this.ticker || !this.start || !this.elapse) {
       throw new Error('설정을 먼저 세팅해주세요')
     }
@@ -143,11 +137,13 @@ export default class Vb {
       elapse: this.elapse,
     })
 
+    // 반드시 start에서 한시간 이내에 실행해야 의도대로 동작함
     const [currentData] = await this.quotation.getOhlcv({
       ticker: this.ticker,
       interval: 'minute60',
       count: 1,
     })
+    console.log(currentData)
 
     const { open, high, low, close } = previousData
     const range = high - low
@@ -156,14 +152,127 @@ export default class Vb {
     const targetPrice = range * noise + currentData.open
 
     this.targetPrice = targetPrice
+
+    return this.targetPrice
+  }
+
+  async getCurrentPrice(): Promise<number> {
+    const currentPrice = await this.quotation.getCurrentPrice({
+      ticker: this.ticker,
+    })
+
+    return currentPrice
   }
 
   async run() {
     this.isStart = true
 
+    if (!this.buyTime || !this.sellTime) {
+      const { buyTime, sellTime } = await this.setTargetTime()
+
+      this.socket.emit('set-target-time', {
+        userTickerId: this.socket.userTickerId,
+        message: '목표 매수 매도 시간이 설정되었습니다.',
+        data: { buyTime, sellTime },
+      })
+    }
+
     while (this.isStart) {
-      console.log(this.socket.id)
-      this.socket.emit('test', 'test')
+      const now = moment()
+
+      if (!this.isHold && now.isBetween(this.buyTime, this.sellTime)) {
+        if (!this.targetPrice) {
+          const targetPrice = await this.setTargetPrice()
+
+          this.socket.emit('set-target-price', {
+            userTickerId: this.socket.userTickerId,
+            message: '목표가가 설정되었습니다.',
+            data: { targetPrice },
+          })
+        }
+
+        const currentPrice = await this.quotation.getCurrentPrice({
+          ticker: this.ticker,
+        })
+
+        if (currentPrice >= this.targetPrice) {
+          const { balance: cash } = await this.upbit.getBalance()
+          const result = await this.upbit.buyMarketOrder({
+            ticker: this.ticker,
+            price: Number(cash) * 0.9995,
+          })
+
+          while (true) {
+            const order = await this.upbit.getOrder(result.uuid)
+
+            if (order && order.trades.length > 0) {
+              const balance = await this.upbit.getBalance(this.ticker)
+
+              if (balance) {
+                // TODO: 메시지 전송 필요
+                console.log(
+                  `${this.ticker}(${balance.balance}) 매수 주문 처리 완료`,
+                )
+                break
+              }
+            } else {
+              // TODO: 메시지 전송 필요
+              console.log(`${this.ticker} 매수 주문 처리 대기중...`)
+              await sleep(500)
+            }
+          }
+
+          this.isHold = true
+          this.isSell = false
+
+          this.socket.emit('buy-market-order', {
+            userTickerId: this.socket.userTickerId,
+            message: '목표가에 도달해 시장가로 매수하였습니다.',
+            data: { isHold: this.isHold, isSell: this.isSell },
+          })
+        }
+      }
+
+      if (this.isHold && !this.isSell && now.isAfter(this.sellTime)) {
+        const { balance: volume } = await this.upbit.getBalance(this.ticker)
+
+        const result = await this.upbit.sellMarketOrder({
+          ticker: this.ticker,
+          volume: Number(volume),
+        })
+
+        while (true) {
+          const order = await this.upbit.getOrder(result.uuid)
+
+          if (order && order.trades.length > 0) {
+            const balance = await this.upbit.getBalance()
+
+            if (balance) {
+              // TODO: 메시지 전송 필요
+              console.log(
+                `${this.ticker}(${balance.balance}) 매도 주문 처리 완료`,
+              )
+              break
+            } else {
+              // TODO: 메시지 전송 필요
+              console.log(`${this.ticker} 매수 주문 처리 대기중...`)
+              await sleep(500)
+            }
+          }
+        }
+
+        this.isHold = false
+        this.isSell = true
+
+        this.socket.emit('buy-market-order', {
+          userTickerId: this.socket.userTickerId,
+          message: '목표가에 도달해 시장가로 매도하였습니다.',
+          data: { isHold: this.isHold, isSell: this.isSell },
+        })
+      }
+
+      // TODO: 중단 이후의 삶을 그려보자
+
       await sleep(1000)
     }
   }

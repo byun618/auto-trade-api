@@ -3,7 +3,7 @@ import { Server } from 'socket.io'
 import { initApp } from './express-app'
 import { SocketProps } from './public/interfaces'
 import { connectMongoDb } from './public/utils'
-import { initVb, start, stop } from './vb'
+import { getCurrentPrice, initVb, start, stop } from './vb'
 
 const PORT = process.env.APP_PORT || 3001
 
@@ -37,6 +37,10 @@ const serve = async () => {
       console.log(`${socket.id}|${socket.userTickerId} stop`)
 
       stop(String(socket.userTickerId), socket)
+    })
+
+    socket.on('current-price', async () => {
+      getCurrentPrice(String(socket.userTickerId), socket)
     })
 
     socket.on('disconnect', () => {

@@ -63,7 +63,7 @@ export default class Upbit extends Api {
    * @param ticker: string
    * @returns Promise<IAccount[]>
    */
-  async getBalance(ticker: string = 'KRW'): Promise<IAccount> {
+  async getBalance(ticker: string = 'KRW-KRW'): Promise<IAccount> {
     const balances = await this.getBalances()
     const balance = balances.find(
       ({ currency }) => currency === ticker.split('-')[1],

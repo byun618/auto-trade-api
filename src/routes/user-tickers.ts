@@ -41,24 +41,33 @@ router.post('/:id', async (req: Request, res: Response, next: NextFunction) => {
 
   const updateObj = {}
 
-  if (buyTime) {
-    Object.assign(updateObj, { buyTime })
-  }
-  if (sellTime) {
-    Object.assign(updateObj, { sellTime })
-  }
-  if (targetPrice) {
-    Object.assign(updateObj, { targetPrice })
-  }
-  if (isStart) {
-    Object.assign(updateObj, { isStart })
-  }
-  if (isHold) {
-    Object.assign(updateObj, { isHold })
-  }
-  if (isSell) {
-    Object.assign(updateObj, { isSell })
-  }
+  Object.assign(updateObj, {
+    buyTime,
+    sellTime,
+    targetPrice,
+    isStart,
+    isHold,
+    isSell,
+  })
+
+  // if (buyTime) {
+  //   Object.assign(updateObj, { buyTime })
+  // }
+  // if (sellTime) {
+  //   Object.assign(updateObj, { sellTime })
+  // }
+  // if (targetPrice) {
+  //   Object.assign(updateObj, { targetPrice })
+  // }
+  // if (isStart) {
+  //   Object.assign(updateObj, { isStart })
+  // }
+  // if (isHold) {
+  //   Object.assign(updateObj, { isHold })
+  // }
+  // if (isSell) {
+  //   Object.assign(updateObj, { isSell })
+  // }
 
   await UserTicker.updateOne(
     {

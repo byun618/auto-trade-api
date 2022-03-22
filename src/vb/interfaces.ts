@@ -14,9 +14,3 @@ export interface ISettingsProps {
   start: number
   elapse: number
 }
-
-export interface IGettarget {
-  buyTime: string
-  sellTime: string
-  targetPrice: number
-}

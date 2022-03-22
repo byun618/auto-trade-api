@@ -91,7 +91,6 @@ export default class Vb {
 
     // 프로그램 시작 시간 허용 한도
     if (moment().isAfter(buyTime.clone().add(1, 'hour'))) {
-      // TODO: 아예 동작을 못하게
       buyTime.add(1, 'day')
     }
 
@@ -169,8 +168,7 @@ export default class Vb {
     if (!this.buyTime || !this.sellTime) {
       const { buyTime, sellTime } = await this.setTargetTime()
 
-      this.socket.emit('set-target-time', {
-        userTickerId: this.socket.userTickerId,
+      this.socket.emit('mutate', {
         message: '목표 매수 매도 시간이 설정되었습니다.',
         data: { buyTime, sellTime },
       })
@@ -183,8 +181,7 @@ export default class Vb {
         if (!this.targetPrice) {
           const targetPrice = await this.setTargetPrice()
 
-          this.socket.emit('set-target-price', {
-            userTickerId: this.socket.userTickerId,
+          this.socket.emit('mutate', {
             message: '목표가가 설정되었습니다.',
             data: { targetPrice },
           })
@@ -195,79 +192,97 @@ export default class Vb {
         })
 
         if (currentPrice >= this.targetPrice) {
-          const { balance: cash } = await this.upbit.getBalance()
-          const result = await this.upbit.buyMarketOrder({
+          try {
+            const { balance: cash } = await this.upbit.getBalance()
+            const result = await this.upbit.buyMarketOrder({
+              ticker: this.ticker,
+              price: Number(cash) * 0.9995,
+            })
+
+            await sleep(500)
+
+            while (true) {
+              const order = await this.upbit.getOrder(result.uuid)
+
+              if (order && order.trades.length > 0) {
+                const balance = await this.upbit.getBalance(this.ticker)
+
+                if (balance) {
+                  this.socket.emit('message', {
+                    message: `${this.ticker}(${balance.balance}) 매수 주문 처리 완료`,
+                  })
+
+                  break
+                }
+              } else {
+                this.socket.emit('message', {
+                  message: `${this.ticker} 매수 주문 처리 대기중...`,
+                })
+
+                await sleep(500)
+              }
+            }
+
+            this.isHold = true
+            this.isSell = false
+
+            this.socket.emit('mutate', {
+              message: '목표가에 도달해 시장가로 매수하였습니다.',
+              data: { isHold: this.isHold, isSell: this.isSell },
+            })
+          } catch (err) {
+            this.socket.emit('error', {
+              message: err.message,
+            })
+          }
+        }
+      }
+
+      if (this.isHold && !this.isSell && now.isAfter(this.sellTime)) {
+        try {
+          const { balance: volume } = await this.upbit.getBalance(this.ticker)
+
+          const result = await this.upbit.sellMarketOrder({
             ticker: this.ticker,
-            price: Number(cash) * 0.9995,
+            volume: Number(volume),
           })
+
+          await sleep(500)
 
           while (true) {
             const order = await this.upbit.getOrder(result.uuid)
 
             if (order && order.trades.length > 0) {
-              const balance = await this.upbit.getBalance(this.ticker)
+              const balance = await this.upbit.getBalance()
 
               if (balance) {
-                // TODO: 메시지 전송 필요
-                console.log(
-                  `${this.ticker}(${balance.balance}) 매수 주문 처리 완료`,
-                )
+                this.socket.emit('message', {
+                  message: `${this.ticker}(${balance.balance}) 매도 주문 처리 완료`,
+                })
+
                 break
+              } else {
+                this.socket.emit('message', {
+                  message: `${this.ticker} 매수 주문 처리 대기중...`,
+                })
+
+                await sleep(500)
               }
-            } else {
-              // TODO: 메시지 전송 필요
-              console.log(`${this.ticker} 매수 주문 처리 대기중...`)
-              await sleep(500)
             }
           }
 
-          this.isHold = true
-          this.isSell = false
+          this.isHold = false
+          this.isSell = true
 
-          this.socket.emit('buy-market-order', {
-            userTickerId: this.socket.userTickerId,
-            message: '목표가에 도달해 시장가로 매수하였습니다.',
+          this.socket.emit('mutate', {
+            message: '목표가에 도달해 시장가로 매도하였습니다.',
             data: { isHold: this.isHold, isSell: this.isSell },
           })
+        } catch (err) {
+          this.socket.emit('error', {
+            message: err.message,
+          })
         }
-      }
-
-      if (this.isHold && !this.isSell && now.isAfter(this.sellTime)) {
-        const { balance: volume } = await this.upbit.getBalance(this.ticker)
-
-        const result = await this.upbit.sellMarketOrder({
-          ticker: this.ticker,
-          volume: Number(volume),
-        })
-
-        while (true) {
-          const order = await this.upbit.getOrder(result.uuid)
-
-          if (order && order.trades.length > 0) {
-            const balance = await this.upbit.getBalance()
-
-            if (balance) {
-              // TODO: 메시지 전송 필요
-              console.log(
-                `${this.ticker}(${balance.balance}) 매도 주문 처리 완료`,
-              )
-              break
-            } else {
-              // TODO: 메시지 전송 필요
-              console.log(`${this.ticker} 매수 주문 처리 대기중...`)
-              await sleep(500)
-            }
-          }
-        }
-
-        this.isHold = false
-        this.isSell = true
-
-        this.socket.emit('buy-market-order', {
-          userTickerId: this.socket.userTickerId,
-          message: '목표가에 도달해 시장가로 매도하였습니다.',
-          data: { isHold: this.isHold, isSell: this.isSell },
-        })
       }
 
       // TODO: 중단 이후의 삶을 그려보자

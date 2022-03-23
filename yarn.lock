@@ -740,9 +740,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"auto-trade-program-v2@workspace:.":
+"auto-trade-api@workspace:.":
   version: 0.0.0-use.local
-  resolution: "auto-trade-program-v2@workspace:."
+  resolution: "auto-trade-api@workspace:."
   dependencies:
     "@types/cors": ^2.8.12
     "@types/express": ^4.17.13

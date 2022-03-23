@@ -1,12 +1,13 @@
 {
-  "name": "auto-trade-program-v2",
+  "name": "auto-trade-api",
   "version": "1.0.0",
   "main": "index.js",
-  "repository": "https://github.com/byun618/auto-trade-program-v2.git",
+  "repository": "https://github.com/byun618/auto-trade-api.git",
   "author": "byun618 <byun618@gmail.com>",
   "license": "MIT",
   "scripts": {
     "build": "rm -rf dist && tsc",
+    "start": "node -r dotenv/config dist/index.js",
     "dev:server": "ts-node-dev -r dotenv/config ./src/index.ts",
     "dev:program": "ts-node-dev -r dotenv/config ./src/vb/index.ts"
   },

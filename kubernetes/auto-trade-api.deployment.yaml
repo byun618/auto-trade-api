@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: auto-trade-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: auto-trade-api
+  template:
+    metadata:
+      labels:
+        app: auto-trade-api
+    spec:
+      containers:
+        - name: auto-trade-api
+          image: byun618/auto-trade-api:0.0.1-pre1
+          args: ['yarn', 'start']
+          resources:
+            requests:
+              cpu: '200m'
+              memory: '200Mi'
+            limits:
+              cpu: '200m'
+              memory: '200Mi'
+          envFrom:
+            - secretRef:
+                name: auto-trade-api
+      restartPolicy: Always
+      imagePullSecrets:
+        - name: regcred

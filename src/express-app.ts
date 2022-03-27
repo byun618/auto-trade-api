@@ -1,4 +1,4 @@
-import express from 'express'
+import express, { Express, NextFunction, Request, Response } from 'express'
 import cors from 'cors'
 import pino from 'express-pino-logger'
 import helmet from 'helmet'
@@ -16,6 +16,16 @@ export const initApp = () => {
   for (const { url, router } of routes) {
     app.use(url, router)
   }
+
+  app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
+    console.error(err)
+    return res.json({
+      error: {
+        name: err.name,
+        message: err.message,
+      },
+    })
+  })
 
   return app
 }

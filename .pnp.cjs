@@ -34,6 +34,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./",\
           "packageDependencies": [\
             ["@types/cors", "npm:2.8.12"],\
+            ["@types/crypto-js", "npm:4.1.1"],\
             ["@types/express", "npm:4.17.13"],\
             ["@types/express-pino-logger", "npm:4.0.3"],\
             ["@types/helmet", "npm:4.0.0"],\
@@ -44,6 +45,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["axios", "npm:0.26.1"],\
             ["cors", "npm:2.8.5"],\
             ["crypto", "npm:1.0.1"],\
+            ["crypto-js", "npm:4.1.1"],\
             ["dotenv", "npm:16.0.0"],\
             ["eslint", "npm:7.32.0"],\
             ["eslint-config-prettier", "virtual:41dea9f7c01fc29604a0ad165390c39e1eecdacdc27fc4fe0fbfb6450bb9e8251fb1b0dd2a43c214625351cc17a39b5f02ff117c560db9276d49086a05b416e3#npm:8.5.0"],\
@@ -320,6 +322,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/@types-cors-npm-2.8.12-ff52e8e514-8c45f112c7.zip/node_modules/@types/cors/",\
           "packageDependencies": [\
             ["@types/cors", "npm:2.8.12"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["@types/crypto-js", [\
+        ["npm:4.1.1", {\
+          "packageLocation": "./.yarn/cache/@types-crypto-js-npm-4.1.1-1c4ce3312a-ea3d6a67b6.zip/node_modules/@types/crypto-js/",\
+          "packageDependencies": [\
+            ["@types/crypto-js", "npm:4.1.1"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -1010,6 +1021,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["auto-trade-api", "workspace:."],\
             ["@types/cors", "npm:2.8.12"],\
+            ["@types/crypto-js", "npm:4.1.1"],\
             ["@types/express", "npm:4.17.13"],\
             ["@types/express-pino-logger", "npm:4.0.3"],\
             ["@types/helmet", "npm:4.0.0"],\
@@ -1020,6 +1032,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["axios", "npm:0.26.1"],\
             ["cors", "npm:2.8.5"],\
             ["crypto", "npm:1.0.1"],\
+            ["crypto-js", "npm:4.1.1"],\
             ["dotenv", "npm:16.0.0"],\
             ["eslint", "npm:7.32.0"],\
             ["eslint-config-prettier", "virtual:41dea9f7c01fc29604a0ad165390c39e1eecdacdc27fc4fe0fbfb6450bb9e8251fb1b0dd2a43c214625351cc17a39b5f02ff117c560db9276d49086a05b416e3#npm:8.5.0"],\
@@ -1428,6 +1441,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/crypto-npm-1.0.1-7cb8e3dca6-087fe3165b.zip/node_modules/crypto/",\
           "packageDependencies": [\
             ["crypto", "npm:1.0.1"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["crypto-js", [\
+        ["npm:4.1.1", {\
+          "packageLocation": "./.yarn/cache/crypto-js-npm-4.1.1-38a3b8c19d-b3747c12ee.zip/node_modules/crypto-js/",\
+          "packageDependencies": [\
+            ["crypto-js", "npm:4.1.1"]\
           ],\
           "linkType": "HARD"\
         }]\

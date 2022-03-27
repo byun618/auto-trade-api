@@ -1,4 +1,5 @@
 import moment, { Moment } from 'moment-timezone'
+import { UserTicker } from '../models/user-tickers'
 import { SocketProps } from '../public/interfaces'
 import { sleep } from '../public/utils'
 import { Quotation, Upbit } from '../upbit'
@@ -164,13 +165,19 @@ export default class Vb {
 
   async run() {
     this.isStart = true
+    const userTicker = await UserTicker.findOne({
+      id: this.socket.userTickerId,
+    })
 
     if (!this.buyTime || !this.sellTime) {
       const { buyTime, sellTime } = await this.setTargetTime()
 
-      this.socket.emit('mutate', {
+      userTicker.buyTime = buyTime
+      userTicker.sellTime = sellTime
+      await userTicker.save()
+
+      this.socket.emit('message', {
         message: '목표 매수 매도 시간이 설정되었습니다.',
-        data: { buyTime, sellTime },
       })
     }
 
@@ -181,9 +188,11 @@ export default class Vb {
         if (!this.targetPrice) {
           const targetPrice = await this.setTargetPrice()
 
-          this.socket.emit('mutate', {
+          userTicker.targetPrice = targetPrice
+          await userTicker.save()
+
+          this.socket.emit('message', {
             message: '목표가가 설정되었습니다.',
-            data: { targetPrice },
           })
         }
 
@@ -226,9 +235,12 @@ export default class Vb {
             this.isHold = true
             this.isSell = false
 
-            this.socket.emit('mutate', {
+            userTicker.isHold = this.isHold
+            userTicker.isSell = this.isSell
+            await userTicker.save()
+
+            this.socket.emit('message', {
               message: '목표가에 도달해 시장가로 매수하였습니다.',
-              data: { isHold: this.isHold, isSell: this.isSell },
             })
           } catch (err) {
             this.socket.emit('error', {
@@ -274,9 +286,12 @@ export default class Vb {
           this.isHold = false
           this.isSell = true
 
-          this.socket.emit('mutate', {
+          userTicker.isHold = this.isHold
+          userTicker.isSell = this.isSell
+          await userTicker.save()
+
+          this.socket.emit('message', {
             message: '목표가에 도달해 시장가로 매도하였습니다.',
-            data: { isHold: this.isHold, isSell: this.isSell },
           })
         } catch (err) {
           this.socket.emit('error', {

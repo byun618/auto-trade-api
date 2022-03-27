@@ -66,6 +66,17 @@ export const stop = async (userTickerId: string, socket: Socket) => {
     return
   }
 
+  const userTicker = await UserTicker.findOne({
+    id: userTickerId,
+  })
+
+  userTicker.buyTime = null
+  userTicker.isHold = null
+  userTicker.isSell = null
+  userTicker.sellTime = null
+  userTicker.targetPrice = null
+  await userTicker.save()
+
   socket.emit('message', { message: '프로그램을 정지합니다.' })
 
   vb.stop()

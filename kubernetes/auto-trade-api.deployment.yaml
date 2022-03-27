@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: auto-trade-api
-          image: byun618/auto-trade-api:0.0.1-pre1
+          image: byun618/auto-trade-api:0.0.2-pre1
           args: ['yarn', 'start']
           resources:
             requests:

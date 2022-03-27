@@ -1,6 +1,6 @@
 {
   "name": "auto-trade-api",
-  "version": "1.0.0",
+  "version": "0.0.2",
   "main": "index.js",
   "repository": "https://github.com/byun618/auto-trade-api.git",
   "author": "byun618 <byun618@gmail.com>",

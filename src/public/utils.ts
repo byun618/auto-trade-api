@@ -20,3 +20,19 @@ export const makeJwtToken = (user: IUser) => {
     expiresIn: '730 days',
   })
 }
+
+export const extractJwtToken = (
+  req: any,
+): {
+  userId: string
+} => {
+  const auth = req.headers.authorization
+  if (!auth) {
+    throw new Error('No Auth Header')
+  }
+
+  const token = auth.split(' ')[1]
+  const decoded = jwt.verify(token, process.env.AUTH_SALT as string)
+
+  return decoded as { userId: string }
+}

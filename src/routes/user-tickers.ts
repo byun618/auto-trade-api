@@ -1,82 +1,51 @@
 import { NextFunction, Request, Response, Router } from 'express'
 import { UserTicker } from '../models/user-tickers'
 import { User } from '../models/users'
+import { extractJwtToken } from '../public/utils'
 
 const url = '/user-tickers'
 const router = Router()
 
 router.get('/', async (req: Request, res: Response, next: NextFunction) => {
-  const user = await User.findOne({ name: '변상현' })
+  try {
+    const { userId } = extractJwtToken(req)
 
-  const userTickers = await UserTicker.find({
-    user: user._id,
-  })
+    const userTickers = await UserTicker.find({
+      user: userId,
+    })
 
-  res.json(userTickers)
+    res.json(userTickers)
+  } catch (err) {
+    next(err)
+  }
 })
 
 router.post('/', async (req: Request, res: Response, next: NextFunction) => {
-  const { name, start, elapse } = req.body
+  try {
+    const { name, start, elapse } = req.body
 
-  const user = await User.findOne({ name: '변상현' })
+    const user = await User.findOne({ name: '변상현' })
 
-  await UserTicker.create({ user: user._id, name, start, elapse })
+    await UserTicker.create({ user: user._id, name, start, elapse })
 
-  res.json({ message: 'OK' })
+    res.json({ message: 'OK' })
+  } catch (err) {
+    next(err)
+  }
 })
 
 router.get('/:id', async (req: Request, res: Response, next: NextFunction) => {
-  const { id } = req.params
+  try {
+    const { id } = req.params
 
-  const userTicker = await UserTicker.findOne({
-    _id: id,
-  })
+    const userTicker = await UserTicker.findOne({
+      _id: id,
+    })
 
-  res.json(userTicker)
-})
-
-router.post('/:id', async (req: Request, res: Response, next: NextFunction) => {
-  const { id } = req.params
-  const { buyTime, sellTime, targetPrice, isStart, isHold, isSell } = req.body
-
-  const updateObj = {}
-
-  Object.assign(updateObj, {
-    buyTime,
-    sellTime,
-    targetPrice,
-    isStart,
-    isHold,
-    isSell,
-  })
-
-  // if (buyTime) {
-  //   Object.assign(updateObj, { buyTime })
-  // }
-  // if (sellTime) {
-  //   Object.assign(updateObj, { sellTime })
-  // }
-  // if (targetPrice) {
-  //   Object.assign(updateObj, { targetPrice })
-  // }
-  // if (isStart) {
-  //   Object.assign(updateObj, { isStart })
-  // }
-  // if (isHold) {
-  //   Object.assign(updateObj, { isHold })
-  // }
-  // if (isSell) {
-  //   Object.assign(updateObj, { isSell })
-  // }
-
-  await UserTicker.updateOne(
-    {
-      id,
-    },
-    updateObj,
-  )
-
-  res.json({ message: 'OK' })
+    res.json(userTicker)
+  } catch (err) {
+    next(err)
+  }
 })
 
 export default { url, router }

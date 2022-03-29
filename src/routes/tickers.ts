@@ -5,10 +5,14 @@ const url = '/tickers'
 const router = Router()
 
 router.get('/', async (req: Request, res: Response, next: NextFunction) => {
-  const quotation = new Quotation()
-  const tickers = await quotation.getTickers({ fiat: 'KRW' })
+  try {
+    const quotation = new Quotation()
+    const tickers = await quotation.getTickers({ fiat: 'KRW' })
 
-  res.json(tickers)
+    res.json(tickers)
+  } catch (err) {
+    next(err)
+  }
 })
 
 export default { url, router }

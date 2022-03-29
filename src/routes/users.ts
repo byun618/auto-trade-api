@@ -1,18 +1,22 @@
 import { PBKDF2 } from 'crypto-js'
 import { NextFunction, Request, Response, Router } from 'express'
 import { User } from '../models/users'
-import { makeJwtToken } from '../public/utils'
+import { extractJwtToken, makeJwtToken } from '../public/utils'
 
 const url = '/users'
 const router = Router()
 
 router.get('/', async (req: Request, res: Response, next: NextFunction) => {
   try {
-    console.log(req.headers.authorization)
+    const { userId } = extractJwtToken(req)
+    const user = await User.findOne(
+      {
+        id: userId,
+      },
+      { name: 1, email: 1 },
+    )
 
-    const users = await User.find()
-
-    res.json(users)
+    res.json(user)
   } catch (err) {
     next(err)
   }

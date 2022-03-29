@@ -1,14 +1,21 @@
+import { PBKDF2 } from 'crypto-js'
 import { NextFunction, Request, Response, Router } from 'express'
 import { User } from '../models/users'
-import crpyto, { PBKDF2 } from 'crypto-js'
+import { makeJwtToken } from '../public/utils'
 
 const url = '/users'
 const router = Router()
 
 router.get('/', async (req: Request, res: Response, next: NextFunction) => {
-  const users = await User.find()
+  try {
+    console.log(req.headers.authorization)
 
-  res.json(users)
+    const users = await User.find()
+
+    res.json(users)
+  } catch (err) {
+    next(err)
+  }
 })
 
 router.post(
@@ -28,7 +35,7 @@ router.post(
         throw new Error('User not Found')
       }
 
-      res.json(user)
+      res.json({ token: makeJwtToken(user) })
     } catch (err) {
       next(err)
     }

@@ -166,7 +166,7 @@ export default class Vb {
   async run() {
     this.isStart = true
     const userTicker = await UserTicker.findOne({
-      id: this.socket.userTickerId,
+      _id: this.socket.userTickerId,
     })
 
     if (!this.buyTime || !this.sellTime) {

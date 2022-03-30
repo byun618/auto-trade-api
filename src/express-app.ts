@@ -1,4 +1,4 @@
-import express, { Express, NextFunction, Request, Response } from 'express'
+import express, { NextFunction, Request, Response } from 'express'
 import cors from 'cors'
 import pino from 'express-pino-logger'
 import helmet from 'helmet'

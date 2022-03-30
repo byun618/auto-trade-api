@@ -11,7 +11,7 @@ router.get('/', async (req: Request, res: Response, next: NextFunction) => {
     const { userId } = extractJwtToken(req)
     const user = await User.findOne(
       {
-        id: userId,
+        _id: userId,
       },
       { name: 1, email: 1 },
     )

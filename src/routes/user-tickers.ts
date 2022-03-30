@@ -20,20 +20,6 @@ router.get('/', async (req: Request, res: Response, next: NextFunction) => {
   }
 })
 
-router.post('/', async (req: Request, res: Response, next: NextFunction) => {
-  try {
-    const { name, start, elapse } = req.body
-
-    const user = await User.findOne({ name: '변상현' })
-
-    await UserTicker.create({ user: user._id, name, start, elapse })
-
-    res.json({ message: 'OK' })
-  } catch (err) {
-    next(err)
-  }
-})
-
 router.get('/:id', async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { id } = req.params

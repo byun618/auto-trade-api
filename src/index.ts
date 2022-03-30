@@ -1,9 +1,9 @@
 import http from 'http'
 import { Server } from 'socket.io'
 import { initApp } from './express-app'
+import Program from './program'
 import { SocketProps } from './public/interfaces'
 import { connectMongoDb } from './public/utils'
-import { getCurrentPrice, initVb, start, stop } from './vb'
 
 const PORT = process.env.APP_PORT || 3001
 
@@ -15,33 +15,27 @@ const serve = async () => {
   })
 
   await connectMongoDb()
+  const program = new Program()
 
   // TODO: 프로그램 에러시 소켓 통신 어떻게 해야하나
   io.on('connection', async (socket: SocketProps) => {
     const query = socket.handshake.query
-    socket.userTickerId = query.userTickerId
+    socket.userTickerId = query.userTickerId as string
 
-    console.log(`${socket.id}|${socket.userTickerId} connected`)
-
-    socket.on('init', async (data) => {
-      console.log(`${socket.id}|${socket.userTickerId} init`)
-      const { userTickerId } = data
-      await initVb(userTickerId, socket)
+    socket.on('init', async () => {
+      await program.initVb(socket)
     })
 
     socket.on('start', async () => {
-      console.log(`${socket.id}|${socket.userTickerId} start`)
-      start(String(socket.userTickerId), socket)
+      await program.start(socket)
     })
 
     socket.on('stop', async () => {
-      console.log(`${socket.id}|${socket.userTickerId} stop`)
-
-      stop(String(socket.userTickerId), socket)
+      await program.stop(socket)
     })
 
     socket.on('current-price', async () => {
-      getCurrentPrice(String(socket.userTickerId), socket)
+      await program.getCurrentPrice(socket)
     })
 
     socket.on('disconnect', () => {

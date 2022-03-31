@@ -1,5 +1,7 @@
+import { UserTickerLog } from './models/user-ticker-logs'
 import { UserTicker } from './models/user-tickers'
 import { SocketProps } from './public/interfaces'
+import { logScoketError, logSocketMessage } from './public/utils'
 import Vb from './vb/vb'
 
 interface IProgramList {
@@ -29,7 +31,8 @@ export default class Program {
         }
 
         vb.setSocket(socket)
-        socket.emit('message', { message })
+        await logSocketMessage({ socket, message })
+
         return
       }
 
@@ -46,11 +49,11 @@ export default class Program {
 
       this.programList[userTickerId] = vb
 
-      socket.emit('message', { message: '프로그램을 초기화합니다.' })
+      await logSocketMessage({ socket, message: '프로그램을 초기화합니다.' })
     } catch (err) {
-      console.error(err)
-      socket.emit('error', {
-        message: err.message,
+      await logScoketError({
+        err,
+        socket,
         description: '프로그램 초기화 중 오류가 발생했습니다.',
       })
     }
@@ -62,16 +65,22 @@ export default class Program {
       const { isStart } = vb.getStatus()
 
       if (isStart) {
-        socket.emit('message', { message: '프로그램이 이미 동작 중입니다.' })
+        await logSocketMessage({
+          socket,
+          message: '프로그램이 이미 동작 중입니다.',
+        })
         return
       }
 
-      socket.emit('message', { message: '프로그램을 시작합니다.' })
+      await logSocketMessage({
+        socket,
+        message: '프로그램을 시작합니다.',
+      })
       vb.run()
     } catch (err) {
-      console.error(err)
-      socket.emit('error', {
-        message: err.message,
+      await logScoketError({
+        err,
+        socket,
         description: '프로그램 시작 중 오류가 발생했습니다.',
       })
     }
@@ -84,7 +93,10 @@ export default class Program {
       const { isStart } = vb.getStatus()
 
       if (!isStart) {
-        socket.emit('message', { message: '프로그램이 이미 정지되었습니다.' })
+        await logSocketMessage({
+          socket,
+          message: '프로그램이 이미 정지되었습니다.',
+        })
         return
       }
 
@@ -98,13 +110,16 @@ export default class Program {
       userTicker.targetPrice = null
       await userTicker.save()
 
-      socket.emit('message', { message: '프로그램을 정지합니다.' })
+      await logSocketMessage({
+        socket,
+        message: '프로그램을 정지합니다.',
+      })
       vb.stop()
       delete this.programList[userTickerId]
     } catch (err) {
-      console.error(err)
-      socket.emit('error', {
-        message: err.message,
+      await logScoketError({
+        err,
+        socket,
         description: '프로그램 정지 중 오류가 발생했습니다.',
       })
     }
@@ -115,11 +130,14 @@ export default class Program {
       const vb = this.programList[socket.userTickerId]
       const currentPrice = await vb.getCurrentPrice()
 
-      socket.emit('message', { message: `현재가: ${currentPrice}` })
+      await logSocketMessage({
+        socket,
+        message: `현재가: ${currentPrice}`,
+      })
     } catch (err) {
-      console.error(err)
-      socket.emit('error', {
-        message: err.message,
+      await logScoketError({
+        err,
+        socket,
         description: '현재가 불러오는 중 오류가 발생했습니다.',
       })
     }

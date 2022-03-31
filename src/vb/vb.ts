@@ -1,4 +1,5 @@
 import moment, { Moment } from 'moment-timezone'
+import { UserTickerLog } from '../models/user-ticker-logs'
 import { UserTicker } from '../models/user-tickers'
 import { SocketProps } from '../public/interfaces'
 import { sleep } from '../public/utils'
@@ -176,7 +177,7 @@ export default class Vb {
       userTicker.sellTime = sellTime
       await userTicker.save()
 
-      this.socket.emit('message', {
+      await this.logSocketMessage({
         message: '목표 매수 매도 시간이 설정되었습니다.',
       })
     }
@@ -191,7 +192,7 @@ export default class Vb {
           userTicker.targetPrice = targetPrice
           await userTicker.save()
 
-          this.socket.emit('message', {
+          await this.logSocketMessage({
             message: '목표가가 설정되었습니다.',
           })
         }
@@ -217,14 +218,14 @@ export default class Vb {
                 const balance = await this.upbit.getBalance(this.ticker)
 
                 if (balance) {
-                  this.socket.emit('message', {
+                  await this.logSocketMessage({
                     message: `${this.ticker}(${balance.balance}) 매수 주문 처리 완료`,
                   })
 
                   break
                 }
               } else {
-                this.socket.emit('message', {
+                await this.logSocketMessage({
                   message: `${this.ticker} 매수 주문 처리 대기중...`,
                 })
 
@@ -239,12 +240,13 @@ export default class Vb {
             userTicker.isSell = this.isSell
             await userTicker.save()
 
-            this.socket.emit('message', {
+            await this.logSocketMessage({
               message: '목표가에 도달해 시장가로 매수하였습니다.',
             })
           } catch (err) {
-            this.socket.emit('error', {
-              message: err.message,
+            await this.logSocketError({
+              err,
+              description: '매수 주문 중에 오류가 발생했습니다.',
             })
           }
         }
@@ -268,13 +270,13 @@ export default class Vb {
               const balance = await this.upbit.getBalance()
 
               if (balance) {
-                this.socket.emit('message', {
+                await this.logSocketMessage({
                   message: `${this.ticker}(${balance.balance}) 매도 주문 처리 완료`,
                 })
 
                 break
               } else {
-                this.socket.emit('message', {
+                await this.logSocketMessage({
                   message: `${this.ticker} 매수 주문 처리 대기중...`,
                 })
 
@@ -290,12 +292,13 @@ export default class Vb {
           userTicker.isSell = this.isSell
           await userTicker.save()
 
-          this.socket.emit('message', {
+          await this.logSocketMessage({
             message: '목표가에 도달해 시장가로 매도하였습니다.',
           })
         } catch (err) {
-          this.socket.emit('error', {
-            message: err.message,
+          await this.logSocketError({
+            err,
+            description: '매도 주문 중에 오류가 발생했습니다.',
           })
         }
       }
@@ -308,5 +311,22 @@ export default class Vb {
 
   stop() {
     this.isStart = false
+  }
+
+  async logSocketMessage({ message }) {
+    await UserTickerLog.create({
+      userTicker: this.socket.userTickerId,
+      message,
+    })
+    this.socket.emit('message', { message })
+  }
+
+  async logSocketError({ err, description }) {
+    await UserTickerLog.create({
+      userTicker: this.socket.userTickerId,
+      message: err.message,
+      description,
+    })
+    this.socket.emit('error', { message: err.message, description })
   }
 }

@@ -296,10 +296,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:*, @types/node@npm:>=10.0.0, @types/node@npm:^17.0.21":
+"@types/node@npm:*, @types/node@npm:^17.0.21":
   version: 17.0.21
   resolution: "@types/node@npm:17.0.21"
   checksum: 89dcd2fe82f21d3634266f8384e9c865cf8af49685639fbdbd799bdd1040480fb1e8eeda2d3b9fce41edbe704d2a4be9f427118c4ae872e8d9bb7cbeb3c41a94
+  languageName: node
+  linkType: hard
+
+"@types/node@npm:>=10.0.0":
+  version: 17.0.23
+  resolution: "@types/node@npm:17.0.23"
+  checksum: a3517554737cbb042e76c30d0e5482192ac4d9bea0eeb086e2622d9cabf460a0eb52a696b99fcd18e7fcc93c96db6cc7ae507f6608f256ef0b5c1d8c87a5a470
   languageName: node
   linkType: hard
 
@@ -762,7 +769,6 @@ __metadata:
     "@typescript-eslint/parser": ^5.14.0
     axios: ^0.26.1
     cors: ^2.8.5
-    crypto: ^1.0.1
     crypto-js: ^4.1.1
     dotenv: ^16.0.0
     eslint: 7.32.0
@@ -780,9 +786,9 @@ __metadata:
     jsonwebtoken: ^8.5.1
     moment-timezone: ^0.5.34
     mongoose: ^6.2.7
+    node-upbit-trade: ^0.0.1
     prettier: ^2.5.1
     querystring: ^0.2.1
-    socket.io: ^4.4.1
     ts-node: ^10.7.0
     ts-node-dev: ^1.1.8
     typescript: ^4.6.2
@@ -1128,13 +1134,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"crypto@npm:^1.0.1":
-  version: 1.0.1
-  resolution: "crypto@npm:1.0.1"
-  checksum: 087fe3165bd94c333a49e6ed66a0193911f63eac38a24f379b3001a5fe260a59c413646e53a0f67875ba13902b2686d81dc703cb2c147a4ec727dcdc04e5645e
-  languageName: node
-  linkType: hard
-
 "debug@npm:2.6.9, debug@npm:^2.6.9":
   version: 2.6.9
   resolution: "debug@npm:2.6.9"
@@ -1144,7 +1143,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"debug@npm:4, debug@npm:^4.0.1, debug@npm:^4.1.0, debug@npm:^4.1.1, debug@npm:^4.3.1, debug@npm:^4.3.2, debug@npm:~4.3.1, debug@npm:~4.3.2":
+"debug@npm:4, debug@npm:^4.0.1, debug@npm:^4.1.0, debug@npm:^4.1.1, debug@npm:^4.3.1, debug@npm:^4.3.2":
   version: 4.3.3
   resolution: "debug@npm:4.3.3"
   dependencies:
@@ -1156,7 +1155,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"debug@npm:4.x":
+"debug@npm:4.x, debug@npm:~4.3.1, debug@npm:~4.3.2":
   version: 4.3.4
   resolution: "debug@npm:4.3.4"
   dependencies:
@@ -2981,6 +2980,21 @@ __metadata:
   bin:
     node-gyp: bin/node-gyp.js
   checksum: 4d8ef8860f7e4f4d86c91db3f519d26ed5cc23b48fe54543e2afd86162b4acbd14f21de42a5db344525efb69a991e021b96a68c70c6e2d5f4a5cb770793da6d3
+  languageName: node
+  linkType: hard
+
+"node-upbit-trade@npm:^0.0.1":
+  version: 0.0.1
+  resolution: "node-upbit-trade@npm:0.0.1"
+  dependencies:
+    axios: ^0.26.1
+    dotenv: ^16.0.0
+    jsonwebtoken: ^8.5.1
+    moment-timezone: ^0.5.34
+    querystring: ^0.2.1
+    socket.io: ^4.4.1
+    uuid: ^8.3.2
+  checksum: 22e71c2a9719b64eec2f54bc83bff2945e26c30ecc8e4a626a3161659e32d250989a3cdaee62539381fee3dddd6db9fc539f5cb6bd3c2ba38aa7523d3c1cf159
   languageName: node
   linkType: hard
 

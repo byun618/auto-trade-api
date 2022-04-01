@@ -44,7 +44,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@typescript-eslint/parser", "virtual:41dea9f7c01fc29604a0ad165390c39e1eecdacdc27fc4fe0fbfb6450bb9e8251fb1b0dd2a43c214625351cc17a39b5f02ff117c560db9276d49086a05b416e3#npm:5.14.0"],\
             ["axios", "npm:0.26.1"],\
             ["cors", "npm:2.8.5"],\
-            ["crypto", "npm:1.0.1"],\
             ["crypto-js", "npm:4.1.1"],\
             ["dotenv", "npm:16.0.0"],\
             ["eslint", "npm:7.32.0"],\
@@ -62,9 +61,9 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["jsonwebtoken", "npm:8.5.1"],\
             ["moment-timezone", "npm:0.5.34"],\
             ["mongoose", "npm:6.2.7"],\
+            ["node-upbit-trade", "npm:0.0.1"],\
             ["prettier", "npm:2.5.1"],\
             ["querystring", "npm:0.2.1"],\
-            ["socket.io", "npm:4.4.1"],\
             ["ts-node", "virtual:41dea9f7c01fc29604a0ad165390c39e1eecdacdc27fc4fe0fbfb6450bb9e8251fb1b0dd2a43c214625351cc17a39b5f02ff117c560db9276d49086a05b416e3#npm:10.7.0"],\
             ["ts-node-dev", "virtual:41dea9f7c01fc29604a0ad165390c39e1eecdacdc27fc4fe0fbfb6450bb9e8251fb1b0dd2a43c214625351cc17a39b5f02ff117c560db9276d49086a05b416e3#npm:1.1.8"],\
             ["typescript", "patch:typescript@npm%3A4.6.2#~builtin<compat/typescript>::version=4.6.2&hash=bda367"],\
@@ -422,6 +421,13 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/@types-node-npm-17.0.21-7d68eb6a13-89dcd2fe82.zip/node_modules/@types/node/",\
           "packageDependencies": [\
             ["@types/node", "npm:17.0.21"]\
+          ],\
+          "linkType": "HARD"\
+        }],\
+        ["npm:17.0.23", {\
+          "packageLocation": "./.yarn/cache/@types-node-npm-17.0.23-167849e796-a351755473.zip/node_modules/@types/node/",\
+          "packageDependencies": [\
+            ["@types/node", "npm:17.0.23"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -1031,7 +1037,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@typescript-eslint/parser", "virtual:41dea9f7c01fc29604a0ad165390c39e1eecdacdc27fc4fe0fbfb6450bb9e8251fb1b0dd2a43c214625351cc17a39b5f02ff117c560db9276d49086a05b416e3#npm:5.14.0"],\
             ["axios", "npm:0.26.1"],\
             ["cors", "npm:2.8.5"],\
-            ["crypto", "npm:1.0.1"],\
             ["crypto-js", "npm:4.1.1"],\
             ["dotenv", "npm:16.0.0"],\
             ["eslint", "npm:7.32.0"],\
@@ -1049,9 +1054,9 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["jsonwebtoken", "npm:8.5.1"],\
             ["moment-timezone", "npm:0.5.34"],\
             ["mongoose", "npm:6.2.7"],\
+            ["node-upbit-trade", "npm:0.0.1"],\
             ["prettier", "npm:2.5.1"],\
             ["querystring", "npm:0.2.1"],\
-            ["socket.io", "npm:4.4.1"],\
             ["ts-node", "virtual:41dea9f7c01fc29604a0ad165390c39e1eecdacdc27fc4fe0fbfb6450bb9e8251fb1b0dd2a43c214625351cc17a39b5f02ff117c560db9276d49086a05b416e3#npm:10.7.0"],\
             ["ts-node-dev", "virtual:41dea9f7c01fc29604a0ad165390c39e1eecdacdc27fc4fe0fbfb6450bb9e8251fb1b0dd2a43c214625351cc17a39b5f02ff117c560db9276d49086a05b416e3#npm:1.1.8"],\
             ["typescript", "patch:typescript@npm%3A4.6.2#~builtin<compat/typescript>::version=4.6.2&hash=bda367"],\
@@ -1436,15 +1441,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
-      ["crypto", [\
-        ["npm:1.0.1", {\
-          "packageLocation": "./.yarn/cache/crypto-npm-1.0.1-7cb8e3dca6-087fe3165b.zip/node_modules/crypto/",\
-          "packageDependencies": [\
-            ["crypto", "npm:1.0.1"]\
-          ],\
-          "linkType": "HARD"\
-        }]\
-      ]],\
       ["crypto-js", [\
         ["npm:4.1.1", {\
           "packageLocation": "./.yarn/cache/crypto-js-npm-4.1.1-38a3b8c19d-b3747c12ee.zip/node_modules/crypto-js/",\
@@ -1735,12 +1731,12 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["engine.io", "npm:6.1.3"],\
             ["@types/cookie", "npm:0.4.1"],\
             ["@types/cors", "npm:2.8.12"],\
-            ["@types/node", "npm:17.0.21"],\
+            ["@types/node", "npm:17.0.23"],\
             ["accepts", "npm:1.3.8"],\
             ["base64id", "npm:2.0.0"],\
             ["cookie", "npm:0.4.2"],\
             ["cors", "npm:2.8.5"],\
-            ["debug", "virtual:ee1bbcab87c0701d4ea83dd18afa59b10c6343191c17b3a8e7844ecdde3ca8e8977791131460b822baae289e9261b3b228709bc45987d850e69091b4d363edfa#npm:4.3.3"],\
+            ["debug", "virtual:72896d581b79f60cab4f4385e42c2501d270c2f2299bdd8e4aff4d8d9a14cacc49ae898de11740f944fa2e8bde9074ea0e846fa0eda4dc9cb6324af21b0c72e0#npm:4.3.4"],\
             ["engine.io-parser", "npm:5.0.3"],\
             ["ws", "virtual:9e70eccc1e9279dc15cdc39e6bedc333bb4f86832d21ab6c603ac29b69e4d3a1e0a3108419aaca49e98268debf00d6ff437fc7644cb5c25d4eb15d9715c12241#npm:8.2.3"]\
           ],\
@@ -3694,6 +3690,22 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["node-upbit-trade", [\
+        ["npm:0.0.1", {\
+          "packageLocation": "./.yarn/cache/node-upbit-trade-npm-0.0.1-cef6f15221-22e71c2a97.zip/node_modules/node-upbit-trade/",\
+          "packageDependencies": [\
+            ["node-upbit-trade", "npm:0.0.1"],\
+            ["axios", "npm:0.26.1"],\
+            ["dotenv", "npm:16.0.0"],\
+            ["jsonwebtoken", "npm:8.5.1"],\
+            ["moment-timezone", "npm:0.5.34"],\
+            ["querystring", "npm:0.2.1"],\
+            ["socket.io", "npm:4.4.1"],\
+            ["uuid", "npm:8.3.2"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["nopt", [\
         ["npm:5.0.0", {\
           "packageLocation": "./.yarn/cache/nopt-npm-5.0.0-304b40fbfe-d35fdec187.zip/node_modules/nopt/",\
@@ -4475,7 +4487,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["socket.io", "npm:4.4.1"],\
             ["accepts", "npm:1.3.8"],\
             ["base64id", "npm:2.0.0"],\
-            ["debug", "virtual:ee1bbcab87c0701d4ea83dd18afa59b10c6343191c17b3a8e7844ecdde3ca8e8977791131460b822baae289e9261b3b228709bc45987d850e69091b4d363edfa#npm:4.3.3"],\
+            ["debug", "virtual:72896d581b79f60cab4f4385e42c2501d270c2f2299bdd8e4aff4d8d9a14cacc49ae898de11740f944fa2e8bde9074ea0e846fa0eda4dc9cb6324af21b0c72e0#npm:4.3.4"],\
             ["engine.io", "npm:6.1.3"],\
             ["socket.io-adapter", "npm:2.3.3"],\
             ["socket.io-parser", "npm:4.0.4"]\
@@ -4499,7 +4511,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["socket.io-parser", "npm:4.0.4"],\
             ["@types/component-emitter", "npm:1.2.11"],\
             ["component-emitter", "npm:1.3.0"],\
-            ["debug", "virtual:ee1bbcab87c0701d4ea83dd18afa59b10c6343191c17b3a8e7844ecdde3ca8e8977791131460b822baae289e9261b3b228709bc45987d850e69091b4d363edfa#npm:4.3.3"]\
+            ["debug", "virtual:72896d581b79f60cab4f4385e42c2501d270c2f2299bdd8e4aff4d8d9a14cacc49ae898de11740f944fa2e8bde9074ea0e846fa0eda4dc9cb6324af21b0c72e0#npm:4.3.4"]\
           ],\
           "linkType": "HARD"\
         }]\

@@ -1,19 +1,6 @@
-import mongoose from 'mongoose'
 import jwt from 'jsonwebtoken'
+import mongoose from 'mongoose'
 import { IUser } from '../models/users'
-import { SocketProps } from './interfaces'
-import { UserTickerLog } from '../models/user-ticker-logs'
-
-interface LogSocketMessagePayload {
-  socket: SocketProps
-  message: string
-}
-
-interface LogSocketErrorPayload {
-  err: Error
-  socket: SocketProps
-  description?: string
-}
 
 export const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms))
 
@@ -48,29 +35,4 @@ export const extractJwtToken = (
   const decoded = jwt.verify(token, process.env.AUTH_SALT as string)
 
   return decoded as { userId: string }
-}
-
-export const logSocketMessage = async ({
-  socket,
-  message,
-}: LogSocketMessagePayload) => {
-  await UserTickerLog.create({
-    userTicker: socket.userTickerId,
-    message,
-  })
-  socket.emit('message', { message })
-}
-
-export const logScoketError = async ({
-  err,
-  socket,
-  description,
-}: LogSocketErrorPayload) => {
-  console.error(err)
-  await UserTickerLog.create({
-    userTicker: socket.userTickerId,
-    message: err.message,
-    description,
-  })
-  socket.emit('error', { message: err.message, description })
 }

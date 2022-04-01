@@ -20,6 +20,24 @@ router.get('/', async (req: Request, res: Response, next: NextFunction) => {
   }
 })
 
+router.post('/', async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const { userId } = extractJwtToken(req)
+    const { name, start, elapse } = req.body
+
+    await UserTicker.create({
+      user: userId,
+      name,
+      start,
+      elapse,
+    })
+
+    res.json({ message: 'OK' })
+  } catch (err) {
+    next(err)
+  }
+})
+
 router.get('/:id', async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { id } = req.params

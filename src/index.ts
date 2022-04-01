@@ -5,7 +5,7 @@ import Program from './program'
 import { SocketProps } from './public/interfaces'
 import { connectMongoDb } from './public/utils'
 
-const PORT = process.env.APP_PORT || 3001
+const PORT = process.env.APP_PORT || 3010
 
 const serve = async () => {
   const app = initApp()

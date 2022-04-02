@@ -26,6 +26,8 @@ spec:
           envFrom:
             - secretRef:
                 name: auto-trade-api
+            - secretRef:
+                name: auto-trade-mongodb
       restartPolicy: Always
       imagePullSecrets:
         - name: regcred

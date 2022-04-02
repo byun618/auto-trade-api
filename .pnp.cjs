@@ -42,6 +42,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/node", "npm:17.0.21"],\
             ["@typescript-eslint/eslint-plugin", "virtual:41dea9f7c01fc29604a0ad165390c39e1eecdacdc27fc4fe0fbfb6450bb9e8251fb1b0dd2a43c214625351cc17a39b5f02ff117c560db9276d49086a05b416e3#npm:5.14.0"],\
             ["@typescript-eslint/parser", "virtual:41dea9f7c01fc29604a0ad165390c39e1eecdacdc27fc4fe0fbfb6450bb9e8251fb1b0dd2a43c214625351cc17a39b5f02ff117c560db9276d49086a05b416e3#npm:5.14.0"],\
+            ["auto-trade-models", "portal:/Users/sanghyunbyun/Desktop/auto-trade-models::locator=auto-trade-api%40workspace%3A."],\
             ["axios", "npm:0.26.1"],\
             ["cors", "npm:2.8.5"],\
             ["crypto-js", "npm:4.1.1"],\
@@ -60,7 +61,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["http-errors", "npm:2.0.0"],\
             ["jsonwebtoken", "npm:8.5.1"],\
             ["moment-timezone", "npm:0.5.34"],\
-            ["mongoose", "npm:6.2.7"],\
             ["node-upbit-trade", "npm:0.0.1"],\
             ["prettier", "npm:2.5.1"],\
             ["querystring", "npm:0.2.1"],\
@@ -1035,6 +1035,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/node", "npm:17.0.21"],\
             ["@typescript-eslint/eslint-plugin", "virtual:41dea9f7c01fc29604a0ad165390c39e1eecdacdc27fc4fe0fbfb6450bb9e8251fb1b0dd2a43c214625351cc17a39b5f02ff117c560db9276d49086a05b416e3#npm:5.14.0"],\
             ["@typescript-eslint/parser", "virtual:41dea9f7c01fc29604a0ad165390c39e1eecdacdc27fc4fe0fbfb6450bb9e8251fb1b0dd2a43c214625351cc17a39b5f02ff117c560db9276d49086a05b416e3#npm:5.14.0"],\
+            ["auto-trade-models", "portal:/Users/sanghyunbyun/Desktop/auto-trade-models::locator=auto-trade-api%40workspace%3A."],\
             ["axios", "npm:0.26.1"],\
             ["cors", "npm:2.8.5"],\
             ["crypto-js", "npm:4.1.1"],\
@@ -1053,7 +1054,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["http-errors", "npm:2.0.0"],\
             ["jsonwebtoken", "npm:8.5.1"],\
             ["moment-timezone", "npm:0.5.34"],\
-            ["mongoose", "npm:6.2.7"],\
             ["node-upbit-trade", "npm:0.0.1"],\
             ["prettier", "npm:2.5.1"],\
             ["querystring", "npm:0.2.1"],\
@@ -1061,6 +1061,17 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["ts-node-dev", "virtual:41dea9f7c01fc29604a0ad165390c39e1eecdacdc27fc4fe0fbfb6450bb9e8251fb1b0dd2a43c214625351cc17a39b5f02ff117c560db9276d49086a05b416e3#npm:1.1.8"],\
             ["typescript", "patch:typescript@npm%3A4.6.2#~builtin<compat/typescript>::version=4.6.2&hash=bda367"],\
             ["uuid", "npm:8.3.2"]\
+          ],\
+          "linkType": "SOFT"\
+        }]\
+      ]],\
+      ["auto-trade-models", [\
+        ["portal:/Users/sanghyunbyun/Desktop/auto-trade-models::locator=auto-trade-api%40workspace%3A.", {\
+          "packageLocation": "../auto-trade-models/",\
+          "packageDependencies": [\
+            ["auto-trade-models", "portal:/Users/sanghyunbyun/Desktop/auto-trade-models::locator=auto-trade-api%40workspace%3A."],\
+            ["dotenv", "npm:16.0.0"],\
+            ["mongoose", "npm:6.2.9"]\
           ],\
           "linkType": "SOFT"\
         }]\
@@ -1152,10 +1163,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["bson", [\
-        ["npm:4.6.1", {\
-          "packageLocation": "./.yarn/cache/bson-npm-4.6.1-4e698544f6-32c38400b0.zip/node_modules/bson/",\
+        ["npm:4.6.2", {\
+          "packageLocation": "./.yarn/cache/bson-npm-4.6.2-205304363c-f4072d059a.zip/node_modules/bson/",\
           "packageDependencies": [\
-            ["bson", "npm:4.6.1"],\
+            ["bson", "npm:4.6.2"],\
             ["buffer", "npm:5.7.1"]\
           ],\
           "linkType": "HARD"\
@@ -3203,10 +3214,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["kareem", [\
-        ["npm:2.3.4", {\
-          "packageLocation": "./.yarn/cache/kareem-npm-2.3.4-3a5c31ec37-e12d05e120.zip/node_modules/kareem/",\
+        ["npm:2.3.5", {\
+          "packageLocation": "./.yarn/cache/kareem-npm-2.3.5-ce11fa6c90-eb1b996937.zip/node_modules/kareem/",\
           "packageDependencies": [\
-            ["kareem", "npm:2.3.4"]\
+            ["kareem", "npm:2.3.5"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -3575,7 +3586,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/mongodb-npm-4.3.1-a90fff3f6a-5684b5481b.zip/node_modules/mongodb/",\
           "packageDependencies": [\
             ["mongodb", "npm:4.3.1"],\
-            ["bson", "npm:4.6.1"],\
+            ["bson", "npm:4.6.2"],\
             ["denque", "npm:2.0.1"],\
             ["mongodb-connection-string-url", "npm:2.5.2"],\
             ["saslprep", "npm:1.0.3"],\
@@ -3596,12 +3607,12 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["mongoose", [\
-        ["npm:6.2.7", {\
-          "packageLocation": "./.yarn/cache/mongoose-npm-6.2.7-09cb498f35-01258cd437.zip/node_modules/mongoose/",\
+        ["npm:6.2.9", {\
+          "packageLocation": "./.yarn/cache/mongoose-npm-6.2.9-81f9e9d151-e5769926a3.zip/node_modules/mongoose/",\
           "packageDependencies": [\
-            ["mongoose", "npm:6.2.7"],\
-            ["bson", "npm:4.6.1"],\
-            ["kareem", "npm:2.3.4"],\
+            ["mongoose", "npm:6.2.9"],\
+            ["bson", "npm:4.6.2"],\
+            ["kareem", "npm:2.3.5"],\
             ["mongodb", "npm:4.3.1"],\
             ["mpath", "npm:0.8.4"],\
             ["mquery", "npm:4.0.2"],\

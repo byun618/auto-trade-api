@@ -8,10 +8,10 @@
   "scripts": {
     "build": "rm -rf dist && tsc",
     "start": "node -r dotenv/config dist/index.js",
-    "dev:server": "ts-node-dev -r dotenv/config ./src/index.ts",
-    "dev:program": "ts-node-dev -r dotenv/config ./src/vb/index.ts"
+    "dev": "ts-node-dev -r dotenv/config ./src/index.ts"
   },
   "dependencies": {
+    "auto-trade-models": "portal:/Users/sanghyunbyun/Desktop/auto-trade-models",
     "axios": "^0.26.1",
     "cors": "^2.8.5",
     "crypto-js": "^4.1.1",
@@ -22,7 +22,6 @@
     "http-errors": "^2.0.0",
     "jsonwebtoken": "^8.5.1",
     "moment-timezone": "^0.5.34",
-    "mongoose": "^6.2.7",
     "node-upbit-trade": "^0.0.1",
     "querystring": "^0.2.1",
     "uuid": "^8.3.2"
@@ -50,5 +49,8 @@
     "ts-node-dev": "^1.1.8",
     "typescript": "^4.6.2"
   },
-  "packageManager": "yarn@3.2.0"
+  "packageManager": "yarn@3.2.0",
+  "resolutions": {
+    "auto-trade-models": "portal:/Users/sanghyunbyun/Desktop/auto-trade-models"
+  }
 }

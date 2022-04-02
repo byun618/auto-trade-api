@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response, Router } from 'express'
-import { UserTicker } from '../models/user-tickers'
-import { User } from '../models/users'
+import { UserTicker } from 'auto-trade-models'
+import { User } from 'auto-trade-models'
 import { extractJwtToken } from '../public/utils'
 
 const url = '/user-tickers'

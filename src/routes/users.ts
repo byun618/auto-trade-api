@@ -1,6 +1,6 @@
 import { PBKDF2 } from 'crypto-js'
 import { NextFunction, Request, Response, Router } from 'express'
-import { User } from '../models/users'
+import { User } from 'auto-trade-models'
 import { extractJwtToken, makeJwtToken } from '../public/utils'
 
 const url = '/users'

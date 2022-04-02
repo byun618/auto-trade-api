@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response, Router } from 'express'
 // import { UserTickerLog } from '../models/user-ticker-logs'
-import { UserTickerLog } from 'auto-trade-models'
+import { UserTickerLog } from '@byun618/auto-trade-models'
 
 const url = '/user-ticker-logs'
 const router = Router()

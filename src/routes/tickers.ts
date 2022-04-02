@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response, Router } from 'express'
-import { Quotation } from 'node-upbit-trade'
+import { Quotation } from '@byun618/upbit-node'
 
 const url = '/tickers'
 const router = Router()

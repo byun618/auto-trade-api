@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken'
-import { IUser } from 'auto-trade-models'
+import { IUser } from '@byun618/auto-trade-models'
 
 export const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms))
 

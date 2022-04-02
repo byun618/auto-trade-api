@@ -20,6 +20,5 @@ spec:
           service:
             name: auto-trade-api
             port:
-              number: 3001
-
+              number: 3010
 

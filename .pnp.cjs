@@ -33,6 +33,8 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         [null, {\
           "packageLocation": "./",\
           "packageDependencies": [\
+            ["@byun618/auto-trade-models", "npm:0.0.1"],\
+            ["@byun618/upbit-node", "npm:0.0.1"],\
             ["@types/cors", "npm:2.8.12"],\
             ["@types/crypto-js", "npm:4.1.1"],\
             ["@types/express", "npm:4.17.13"],\
@@ -44,7 +46,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@typescript-eslint/parser", "virtual:41dea9f7c01fc29604a0ad165390c39e1eecdacdc27fc4fe0fbfb6450bb9e8251fb1b0dd2a43c214625351cc17a39b5f02ff117c560db9276d49086a05b416e3#npm:5.14.0"],\
             ["axios", "npm:0.26.1"],\
             ["cors", "npm:2.8.5"],\
-            ["crypto", "npm:1.0.1"],\
             ["crypto-js", "npm:4.1.1"],\
             ["dotenv", "npm:16.0.0"],\
             ["eslint", "npm:7.32.0"],\
@@ -61,10 +62,8 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["http-errors", "npm:2.0.0"],\
             ["jsonwebtoken", "npm:8.5.1"],\
             ["moment-timezone", "npm:0.5.34"],\
-            ["mongoose", "npm:6.2.7"],\
             ["prettier", "npm:2.5.1"],\
             ["querystring", "npm:0.2.1"],\
-            ["socket.io", "npm:4.4.1"],\
             ["ts-node", "virtual:41dea9f7c01fc29604a0ad165390c39e1eecdacdc27fc4fe0fbfb6450bb9e8251fb1b0dd2a43c214625351cc17a39b5f02ff117c560db9276d49086a05b416e3#npm:10.7.0"],\
             ["ts-node-dev", "virtual:41dea9f7c01fc29604a0ad165390c39e1eecdacdc27fc4fe0fbfb6450bb9e8251fb1b0dd2a43c214625351cc17a39b5f02ff117c560db9276d49086a05b416e3#npm:1.1.8"],\
             ["typescript", "patch:typescript@npm%3A4.6.2#~builtin<compat/typescript>::version=4.6.2&hash=bda367"],\
@@ -100,6 +99,33 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@babel/helper-validator-identifier", "npm:7.16.7"],\
             ["chalk", "npm:2.4.2"],\
             ["js-tokens", "npm:4.0.0"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["@byun618/auto-trade-models", [\
+        ["npm:0.0.1", {\
+          "packageLocation": "./.yarn/cache/@byun618-auto-trade-models-npm-0.0.1-df2fae39d9-b7c2f4f89e.zip/node_modules/@byun618/auto-trade-models/",\
+          "packageDependencies": [\
+            ["@byun618/auto-trade-models", "npm:0.0.1"],\
+            ["dotenv", "npm:16.0.0"],\
+            ["mongoose", "npm:6.2.9"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["@byun618/upbit-node", [\
+        ["npm:0.0.1", {\
+          "packageLocation": "./.yarn/cache/@byun618-upbit-node-npm-0.0.1-9441e0de81-d6a3ab73ea.zip/node_modules/@byun618/upbit-node/",\
+          "packageDependencies": [\
+            ["@byun618/upbit-node", "npm:0.0.1"],\
+            ["axios", "npm:0.26.1"],\
+            ["dotenv", "npm:16.0.0"],\
+            ["jsonwebtoken", "npm:8.5.1"],\
+            ["moment-timezone", "npm:0.5.34"],\
+            ["querystring", "npm:0.2.1"],\
+            ["socket.io", "npm:4.4.1"],\
+            ["uuid", "npm:8.3.2"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -422,6 +448,13 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/@types-node-npm-17.0.21-7d68eb6a13-89dcd2fe82.zip/node_modules/@types/node/",\
           "packageDependencies": [\
             ["@types/node", "npm:17.0.21"]\
+          ],\
+          "linkType": "HARD"\
+        }],\
+        ["npm:17.0.23", {\
+          "packageLocation": "./.yarn/cache/@types-node-npm-17.0.23-167849e796-a351755473.zip/node_modules/@types/node/",\
+          "packageDependencies": [\
+            ["@types/node", "npm:17.0.23"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -1020,6 +1053,8 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./",\
           "packageDependencies": [\
             ["auto-trade-api", "workspace:."],\
+            ["@byun618/auto-trade-models", "npm:0.0.1"],\
+            ["@byun618/upbit-node", "npm:0.0.1"],\
             ["@types/cors", "npm:2.8.12"],\
             ["@types/crypto-js", "npm:4.1.1"],\
             ["@types/express", "npm:4.17.13"],\
@@ -1031,7 +1066,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@typescript-eslint/parser", "virtual:41dea9f7c01fc29604a0ad165390c39e1eecdacdc27fc4fe0fbfb6450bb9e8251fb1b0dd2a43c214625351cc17a39b5f02ff117c560db9276d49086a05b416e3#npm:5.14.0"],\
             ["axios", "npm:0.26.1"],\
             ["cors", "npm:2.8.5"],\
-            ["crypto", "npm:1.0.1"],\
             ["crypto-js", "npm:4.1.1"],\
             ["dotenv", "npm:16.0.0"],\
             ["eslint", "npm:7.32.0"],\
@@ -1048,10 +1082,8 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["http-errors", "npm:2.0.0"],\
             ["jsonwebtoken", "npm:8.5.1"],\
             ["moment-timezone", "npm:0.5.34"],\
-            ["mongoose", "npm:6.2.7"],\
             ["prettier", "npm:2.5.1"],\
             ["querystring", "npm:0.2.1"],\
-            ["socket.io", "npm:4.4.1"],\
             ["ts-node", "virtual:41dea9f7c01fc29604a0ad165390c39e1eecdacdc27fc4fe0fbfb6450bb9e8251fb1b0dd2a43c214625351cc17a39b5f02ff117c560db9276d49086a05b416e3#npm:10.7.0"],\
             ["ts-node-dev", "virtual:41dea9f7c01fc29604a0ad165390c39e1eecdacdc27fc4fe0fbfb6450bb9e8251fb1b0dd2a43c214625351cc17a39b5f02ff117c560db9276d49086a05b416e3#npm:1.1.8"],\
             ["typescript", "patch:typescript@npm%3A4.6.2#~builtin<compat/typescript>::version=4.6.2&hash=bda367"],\
@@ -1147,10 +1179,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["bson", [\
-        ["npm:4.6.1", {\
-          "packageLocation": "./.yarn/cache/bson-npm-4.6.1-4e698544f6-32c38400b0.zip/node_modules/bson/",\
+        ["npm:4.6.2", {\
+          "packageLocation": "./.yarn/cache/bson-npm-4.6.2-205304363c-f4072d059a.zip/node_modules/bson/",\
           "packageDependencies": [\
-            ["bson", "npm:4.6.1"],\
+            ["bson", "npm:4.6.2"],\
             ["buffer", "npm:5.7.1"]\
           ],\
           "linkType": "HARD"\
@@ -1432,15 +1464,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["path-key", "npm:3.1.1"],\
             ["shebang-command", "npm:2.0.0"],\
             ["which", "npm:2.0.2"]\
-          ],\
-          "linkType": "HARD"\
-        }]\
-      ]],\
-      ["crypto", [\
-        ["npm:1.0.1", {\
-          "packageLocation": "./.yarn/cache/crypto-npm-1.0.1-7cb8e3dca6-087fe3165b.zip/node_modules/crypto/",\
-          "packageDependencies": [\
-            ["crypto", "npm:1.0.1"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -1735,12 +1758,12 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["engine.io", "npm:6.1.3"],\
             ["@types/cookie", "npm:0.4.1"],\
             ["@types/cors", "npm:2.8.12"],\
-            ["@types/node", "npm:17.0.21"],\
+            ["@types/node", "npm:17.0.23"],\
             ["accepts", "npm:1.3.8"],\
             ["base64id", "npm:2.0.0"],\
             ["cookie", "npm:0.4.2"],\
             ["cors", "npm:2.8.5"],\
-            ["debug", "virtual:ee1bbcab87c0701d4ea83dd18afa59b10c6343191c17b3a8e7844ecdde3ca8e8977791131460b822baae289e9261b3b228709bc45987d850e69091b4d363edfa#npm:4.3.3"],\
+            ["debug", "virtual:72896d581b79f60cab4f4385e42c2501d270c2f2299bdd8e4aff4d8d9a14cacc49ae898de11740f944fa2e8bde9074ea0e846fa0eda4dc9cb6324af21b0c72e0#npm:4.3.4"],\
             ["engine.io-parser", "npm:5.0.3"],\
             ["ws", "virtual:9e70eccc1e9279dc15cdc39e6bedc333bb4f86832d21ab6c603ac29b69e4d3a1e0a3108419aaca49e98268debf00d6ff437fc7644cb5c25d4eb15d9715c12241#npm:8.2.3"]\
           ],\
@@ -3207,10 +3230,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["kareem", [\
-        ["npm:2.3.4", {\
-          "packageLocation": "./.yarn/cache/kareem-npm-2.3.4-3a5c31ec37-e12d05e120.zip/node_modules/kareem/",\
+        ["npm:2.3.5", {\
+          "packageLocation": "./.yarn/cache/kareem-npm-2.3.5-ce11fa6c90-eb1b996937.zip/node_modules/kareem/",\
           "packageDependencies": [\
-            ["kareem", "npm:2.3.4"]\
+            ["kareem", "npm:2.3.5"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -3579,7 +3602,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/mongodb-npm-4.3.1-a90fff3f6a-5684b5481b.zip/node_modules/mongodb/",\
           "packageDependencies": [\
             ["mongodb", "npm:4.3.1"],\
-            ["bson", "npm:4.6.1"],\
+            ["bson", "npm:4.6.2"],\
             ["denque", "npm:2.0.1"],\
             ["mongodb-connection-string-url", "npm:2.5.2"],\
             ["saslprep", "npm:1.0.3"],\
@@ -3600,12 +3623,12 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["mongoose", [\
-        ["npm:6.2.7", {\
-          "packageLocation": "./.yarn/cache/mongoose-npm-6.2.7-09cb498f35-01258cd437.zip/node_modules/mongoose/",\
+        ["npm:6.2.9", {\
+          "packageLocation": "./.yarn/cache/mongoose-npm-6.2.9-81f9e9d151-e5769926a3.zip/node_modules/mongoose/",\
           "packageDependencies": [\
-            ["mongoose", "npm:6.2.7"],\
-            ["bson", "npm:4.6.1"],\
-            ["kareem", "npm:2.3.4"],\
+            ["mongoose", "npm:6.2.9"],\
+            ["bson", "npm:4.6.2"],\
+            ["kareem", "npm:2.3.5"],\
             ["mongodb", "npm:4.3.1"],\
             ["mpath", "npm:0.8.4"],\
             ["mquery", "npm:4.0.2"],\
@@ -4475,7 +4498,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["socket.io", "npm:4.4.1"],\
             ["accepts", "npm:1.3.8"],\
             ["base64id", "npm:2.0.0"],\
-            ["debug", "virtual:ee1bbcab87c0701d4ea83dd18afa59b10c6343191c17b3a8e7844ecdde3ca8e8977791131460b822baae289e9261b3b228709bc45987d850e69091b4d363edfa#npm:4.3.3"],\
+            ["debug", "virtual:72896d581b79f60cab4f4385e42c2501d270c2f2299bdd8e4aff4d8d9a14cacc49ae898de11740f944fa2e8bde9074ea0e846fa0eda4dc9cb6324af21b0c72e0#npm:4.3.4"],\
             ["engine.io", "npm:6.1.3"],\
             ["socket.io-adapter", "npm:2.3.3"],\
             ["socket.io-parser", "npm:4.0.4"]\
@@ -4499,7 +4522,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["socket.io-parser", "npm:4.0.4"],\
             ["@types/component-emitter", "npm:1.2.11"],\
             ["component-emitter", "npm:1.3.0"],\
-            ["debug", "virtual:ee1bbcab87c0701d4ea83dd18afa59b10c6343191c17b3a8e7844ecdde3ca8e8977791131460b822baae289e9261b3b228709bc45987d850e69091b4d363edfa#npm:4.3.3"]\
+            ["debug", "virtual:72896d581b79f60cab4f4385e42c2501d270c2f2299bdd8e4aff4d8d9a14cacc49ae898de11740f944fa2e8bde9074ea0e846fa0eda4dc9cb6324af21b0c72e0#npm:4.3.4"]\
           ],\
           "linkType": "HARD"\
         }]\

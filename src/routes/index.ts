@@ -1,6 +1,5 @@
 import tickers from './tickers'
-import userTickerLogs from './user-ticker-logs'
-import userTickers from './user-tickers'
 import users from './users'
+import userPrograms from './user-programs'
 
-export default [tickers, users, userTickers, userTickerLogs]
+export default [tickers, users, userPrograms]

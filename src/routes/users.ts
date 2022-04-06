@@ -1,6 +1,6 @@
+import { User } from '@byun618/auto-trade-models'
 import { PBKDF2 } from 'crypto-js'
 import { NextFunction, Request, Response, Router } from 'express'
-import { User } from '@byun618/auto-trade-models'
 import { extractJwtToken, makeJwtToken } from '../public/utils'
 
 const url = '/users'
@@ -27,6 +27,14 @@ router.post(
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { email, password } = req.body
+
+      await User.create({
+        name: 'byun618',
+        email,
+        password: PBKDF2(password, process.env.SALT, {
+          keySize: 512 / 32,
+        }).toString(),
+      })
 
       const user = await User.findOne({
         email,

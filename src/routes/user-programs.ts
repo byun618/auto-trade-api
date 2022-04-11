@@ -24,10 +24,13 @@ router.post('/', async (req: Request, res: Response, next: NextFunction) => {
     const { userId } = extractJwtToken(req)
     const { ticker, startTime, timeInterval } = req.body
 
-    console.log(ticker)
+    const userPrograms = await UserProgram.find({
+      user: userId,
+    })
 
     await UserProgram.create({
       user: userId,
+      no: userPrograms.length + 1,
       ticker,
       startTime,
       timeInterval,

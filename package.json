@@ -11,7 +11,7 @@
     "dev": "ts-node-dev -r dotenv/config ./src/index.ts | pino-pretty"
   },
   "dependencies": {
-    "@byun618/auto-trade-models": "^0.0.1",
+    "@byun618/auto-trade-models": "0.0.2",
     "@byun618/upbit-node": "^0.0.1",
     "axios": "^0.26.1",
     "cors": "^2.8.5",
@@ -52,7 +52,6 @@
   },
   "packageManager": "yarn@3.2.0",
   "resolutions": {
-    "@byun618/auto-trade-models": "portal:/Users/sanghyunbyun/Desktop/auto-trade-models",
     "@byun618/upbit-node": "portal:/Users/sanghyunbyun/Desktop/upbit-node"
   }
 }

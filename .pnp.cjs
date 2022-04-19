@@ -33,7 +33,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         [null, {\
           "packageLocation": "./",\
           "packageDependencies": [\
-            ["@byun618/auto-trade-models", "portal:/Users/sanghyunbyun/Desktop/auto-trade-models::locator=auto-trade-api%40workspace%3A."],\
+            ["@byun618/auto-trade-models", "npm:0.0.2"],\
             ["@byun618/upbit-node", "portal:/Users/sanghyunbyun/Desktop/upbit-node::locator=auto-trade-api%40workspace%3A."],\
             ["@types/cors", "npm:2.8.12"],\
             ["@types/crypto-js", "npm:4.1.1"],\
@@ -105,14 +105,14 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@byun618/auto-trade-models", [\
-        ["portal:/Users/sanghyunbyun/Desktop/auto-trade-models::locator=auto-trade-api%40workspace%3A.", {\
-          "packageLocation": "../auto-trade-models/",\
+        ["npm:0.0.2", {\
+          "packageLocation": "./.yarn/cache/@byun618-auto-trade-models-npm-0.0.2-2b27c18070-02877afbda.zip/node_modules/@byun618/auto-trade-models/",\
           "packageDependencies": [\
-            ["@byun618/auto-trade-models", "portal:/Users/sanghyunbyun/Desktop/auto-trade-models::locator=auto-trade-api%40workspace%3A."],\
+            ["@byun618/auto-trade-models", "npm:0.0.2"],\
             ["dotenv", "npm:16.0.0"],\
             ["mongoose", "npm:6.2.9"]\
           ],\
-          "linkType": "SOFT"\
+          "linkType": "HARD"\
         }]\
       ]],\
       ["@byun618/upbit-node", [\
@@ -1067,7 +1067,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./",\
           "packageDependencies": [\
             ["auto-trade-api", "workspace:."],\
-            ["@byun618/auto-trade-models", "portal:/Users/sanghyunbyun/Desktop/auto-trade-models::locator=auto-trade-api%40workspace%3A."],\
+            ["@byun618/auto-trade-models", "npm:0.0.2"],\
             ["@byun618/upbit-node", "portal:/Users/sanghyunbyun/Desktop/upbit-node::locator=auto-trade-api%40workspace%3A."],\
             ["@types/cors", "npm:2.8.12"],\
             ["@types/crypto-js", "npm:4.1.1"],\

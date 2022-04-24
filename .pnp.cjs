@@ -33,8 +33,8 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         [null, {\
           "packageLocation": "./",\
           "packageDependencies": [\
-            ["@byun618/auto-trade-models", "npm:0.0.2"],\
-            ["@byun618/upbit-node", "portal:/Users/sanghyunbyun/Desktop/upbit-node::locator=auto-trade-api%40workspace%3A."],\
+            ["@byun618/auto-trade-models", "npm:0.0.4"],\
+            ["@byun618/upbit-node", "npm:0.0.1"],\
             ["@types/cors", "npm:2.8.12"],\
             ["@types/crypto-js", "npm:4.1.1"],\
             ["@types/express", "npm:4.17.13"],\
@@ -61,6 +61,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["helmet", "npm:5.0.2"],\
             ["http-errors", "npm:2.0.0"],\
             ["jsonwebtoken", "npm:8.5.1"],\
+            ["lodash", "npm:4.17.21"],\
             ["moment-timezone", "npm:0.5.34"],\
             ["pino-pretty", "npm:7.6.0"],\
             ["prettier", "npm:2.5.1"],\
@@ -105,10 +106,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@byun618/auto-trade-models", [\
-        ["npm:0.0.2", {\
-          "packageLocation": "./.yarn/cache/@byun618-auto-trade-models-npm-0.0.2-2b27c18070-02877afbda.zip/node_modules/@byun618/auto-trade-models/",\
+        ["npm:0.0.4", {\
+          "packageLocation": "./.yarn/cache/@byun618-auto-trade-models-npm-0.0.4-6c55b406d5-286770afd2.zip/node_modules/@byun618/auto-trade-models/",\
           "packageDependencies": [\
-            ["@byun618/auto-trade-models", "npm:0.0.2"],\
+            ["@byun618/auto-trade-models", "npm:0.0.4"],\
             ["dotenv", "npm:16.0.0"],\
             ["mongoose", "npm:6.2.9"]\
           ],\
@@ -116,10 +117,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@byun618/upbit-node", [\
-        ["portal:/Users/sanghyunbyun/Desktop/upbit-node::locator=auto-trade-api%40workspace%3A.", {\
-          "packageLocation": "../upbit-node/",\
+        ["npm:0.0.1", {\
+          "packageLocation": "./.yarn/cache/@byun618-upbit-node-npm-0.0.1-9441e0de81-d6a3ab73ea.zip/node_modules/@byun618/upbit-node/",\
           "packageDependencies": [\
-            ["@byun618/upbit-node", "portal:/Users/sanghyunbyun/Desktop/upbit-node::locator=auto-trade-api%40workspace%3A."],\
+            ["@byun618/upbit-node", "npm:0.0.1"],\
             ["axios", "npm:0.26.1"],\
             ["dotenv", "npm:16.0.0"],\
             ["jsonwebtoken", "npm:8.5.1"],\
@@ -128,7 +129,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["socket.io", "npm:4.4.1"],\
             ["uuid", "npm:8.3.2"]\
           ],\
-          "linkType": "SOFT"\
+          "linkType": "HARD"\
         }]\
       ]],\
       ["@cspotcode/source-map-consumer", [\
@@ -1067,8 +1068,8 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./",\
           "packageDependencies": [\
             ["auto-trade-api", "workspace:."],\
-            ["@byun618/auto-trade-models", "npm:0.0.2"],\
-            ["@byun618/upbit-node", "portal:/Users/sanghyunbyun/Desktop/upbit-node::locator=auto-trade-api%40workspace%3A."],\
+            ["@byun618/auto-trade-models", "npm:0.0.4"],\
+            ["@byun618/upbit-node", "npm:0.0.1"],\
             ["@types/cors", "npm:2.8.12"],\
             ["@types/crypto-js", "npm:4.1.1"],\
             ["@types/express", "npm:4.17.13"],\
@@ -1095,6 +1096,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["helmet", "npm:5.0.2"],\
             ["http-errors", "npm:2.0.0"],\
             ["jsonwebtoken", "npm:8.5.1"],\
+            ["lodash", "npm:4.17.21"],\
             ["moment-timezone", "npm:0.5.34"],\
             ["pino-pretty", "npm:7.6.0"],\
             ["prettier", "npm:2.5.1"],\
@@ -3325,6 +3327,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["locate-path", "npm:2.0.0"],\
             ["p-locate", "npm:2.0.0"],\
             ["path-exists", "npm:3.0.0"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["lodash", [\
+        ["npm:4.17.21", {\
+          "packageLocation": "./.yarn/cache/lodash-npm-4.17.21-6382451519-eb835a2e51.zip/node_modules/lodash/",\
+          "packageDependencies": [\
+            ["lodash", "npm:4.17.21"]\
           ],\
           "linkType": "HARD"\
         }]\

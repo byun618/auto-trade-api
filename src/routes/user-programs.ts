@@ -75,4 +75,20 @@ router.get(
   },
 )
 
+router.delete(
+  '/:userProgramId',
+  auth,
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { userProgramId } = req.params
+
+      await UserProgram.deleteOne({ _id: userProgramId })
+
+      res.json(okJson)
+    } catch (err) {
+      next(err)
+    }
+  },
+)
+
 export default { url, router }
